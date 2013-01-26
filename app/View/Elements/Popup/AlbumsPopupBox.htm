@@ -1,0 +1,55 @@
+<?php 
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$action = $this->action;
+?>
+<div class="hide">
+<?php if(isset($action) && $action == "myAlbums"): ?>
+      <div id="delete" class="popup-box delete popupBox">
+        <div class="head">Delete</div>
+        <div class="note"></div>
+        <div class="content">
+        	<b class="red">Warning:</b> Photos under this album will be deleted too.<br />
+        	Are you sure you want to delete this <span class="messageSubject">album</span>?		         
+        </div>
+        <div class="buttons"> 
+             <?php echo $this->Form->create('Popup', 
+                            array("class"=>"deleteForm", 'url'=>array("action"=>"deleteAlbum","controller"=>"UsersAlbums")));?>
+                <input type="hidden" name="data[type_id]"  class="typeId" />
+                <input type="hidden" name="data[param_id]"  class="paramId" />
+                <button type="button" class="button setLoader buttonYes">Yes</button>	or 
+                <a href="javascript:void(1)" class="onCancel">Cancel</a>
+                <span class="ajaxTarget hide"></span>
+            <?php echo $this->Form->end(); ?>    
+        </div>	
+     </div>
+
+<?php elseif(isset($action) && $action == "addNewPhotos"): ?>
+     <div id="addAlbum" class="popup-box addAlbum popupBox">
+        <?php echo $this->Form->create('Popup', 
+                            array("class"=>"addNewAlbumForm", 'url'=>array("action"=>"addAlbum","controller"=>"UsersAlbums")));?>
+        <div class="head">Add New Album</div>
+        <div class="note">
+            <div class="notification mistake"
+                mistake ="" 
+                success="">
+                Album name is required.
+            </div>
+        </div> 
+         <div class="content">
+             <span>Album Name</span>
+             <span>
+                 <?php echo $this->Form->input("UsersAlbum.caption", 
+                        array_merge(array("name"=>"data[album_name]", "class"=>"text"), $noInputOptions));?>
+             </span>   
+         </div>      
+         <div class="buttons clear"> 
+                <input type="hidden" name="data[type_id]"  class="typeId" />
+                <input type="hidden" name="data[param_id]"  class="paramId" />
+                <button type="submit" class="button setLoader buttonYes">Create Album</button>	or 
+                <a href="javascript:void(1)" class="onCancel">Cancel</a>
+                <span class="ajaxTarget hide"></span>  
+         </div>	
+         <?php echo $this->Form->end(); ?>  
+    </div>
+<?php endif; ?>
+</div>

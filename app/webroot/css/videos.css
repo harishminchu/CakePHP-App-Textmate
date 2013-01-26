@@ -1,0 +1,65 @@
+.videos { font-size:11px;}
+.videos .middle { width:700px; margin-left:50px;}
+.videos ul.lists { font-size:11px;} 
+.videos ul.lists li { float:left; padding:5px; width:315px; border:1px solid #DDDDDD; 
+					  margin:0 20px 10px 0; min-height:115px}
+.videos ul.lists.equal li { width:143px; min-height:240px}
+.videos ul.lists.equal li span.title { min-height:55px;}
+.videos ul.lists.block li { clear:both; display:block; float:none; border:0; width:auto;}
+.videos ul.lists.block li div.left { width:355px; border:1px solid #DDDDDD;padding:5px; }
+.videos ul.lists.block .right.options span { display:block; clear:both}
+
+.videos ul.lists li:hover { background:#FCFCFC}
+.videos ul.lists li img { border:1px solid #F3F3F3;padding:2px; cursor:pointer; float:left; margin-right:10px;}
+.videos ul.lists li h3 { padding:0}
+.videos ul.lists li img:hover { border:1px solid #999999}
+.videos ul.lists li span { float:left; padding:2px 0 0 0px; font-size:11px; width:150px}
+.videos ul.lists li span.category { font-size:11px; color:#999999; padding:0 2px 2px 0px;}
+.videos ul.lists li span.add { font-size:11px; font-weight:normal}
+.videos ul.lists li span.title { font-weight:bold; color:#666666; max-width:160px;}
+.videos ul.lists li .small { font-size:11px; color:#666666; display:block; width:150px;}
+.videos ul.lists li span.options { float:left}
+.videos ul.lists li span.options img { float:none; margin:0; border:0;}
+.videos ul.lists li span.options a { margin-right:5px;}
+.videos ul.lists.manage-videos li { margin:0 20px 20px 0;}
+
+.videos.popup-box {height:290px; width:420px;}
+.videos.popup-box textarea { height:70px;}
+
+.videos .upload { width:400px; margin:0 0 20px 80px}
+.videos .search  { margin-bottom:10px;}
+.videos .search input { width:555px; padding:7px;}
+
+.videos ul.lists li .options span img { border:0; margin:0 10px 0 0}
+.videos ul.settings li { float:left; width:500px;}
+.videos ul.blocked.settings li span { width:130px;}
+.videos ul.blocked.settings li.image { width:180px}
+.videos ul.blocked.settings li.image img {border:1px solid #F3F3F3;padding:2px;}
+.videos .play-hover { position:absolute;}
+.videos .my-videos .right.options { margin:35px 0 0 0}
+
+/*play video*/
+.videos .video-container { width:500px;}
+.videos .video-container img.play-video { border:1px solid #DDDDDD; padding:2px;}
+.videos .video-container h3 { margin:0; padding-top:0;}
+.videos .video-container .details {width:490px; margin:10px 0 25px 0}
+.videos .video-container .views { font-weight:normal; color:#666666; float:right; margin:0 5px 0 0}
+.videos .play-hover {  cursor:pointer}
+
+/*comments */
+.videos .message div.right { width:430px}
+.videos .message div.left { padding:8px 0 0 0}
+.videos .message { border-bottom:1px solid #EAEAEA; padding:5px 0 5px 0}
+.videos .message .ago { color:#999999}
+
+.videos textarea { border:0;}
+.videos .box.comment  { margin:0;}
+.videos .content-comments  {width:490px; clear:both; margin:0; padding:0; font-size:11px;}
+.videos .middle .subject h3 { font-size:11px;}
+.videos .middle .subject { margin-bottom:0;}
+
+/* box comment */
+.box.comment { width:386px; margin:0; background-color:#FCFCFC}
+.box.comment .textarea{ width:376px; height:16px; padding:5px;background:url(../img/comment-textarea.png) no-repeat;resize: none;}
+.box.comment .textarea-bottom {background:url(../img/comment-textarea-bottom.png) no-repeat; height:2px;width:386px;}
+

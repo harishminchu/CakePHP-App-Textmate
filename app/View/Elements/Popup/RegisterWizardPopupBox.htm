@@ -1,0 +1,166 @@
+<?php
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$privacies = array("0"=>"", "1"=>"Public", "2"=>"Friends", "3"=>"Only Me");
+	$isActivated = false;
+	$isPersonalDetails = false;
+	$classStep2 = "hide";
+	$classStep3 = "hide";
+	
+	if ($dataNewUser["User"]["active"] == 1):
+		$isActivated = true;
+		$classStep2 = "show";
+	endif;
+	
+	if ($dataNewUser["User"]["first_name"] != "" && $dataNewUser["User"]["last_name"] != ""):
+		$isPersonalDetails = true;
+		$classStep2 = "hide";
+		$classStep3 = "show";
+	endif
+	
+?>
+
+<div class="hide">
+    <div id="registerWizard" class="popup-box register-wizard popupBox" style="width:500px; height:300px">
+       
+        <?php if (!$isActivated): ?>
+        <div class="step-1"> 
+            <div class="head">Step 1 - Activate (1 of 3)</div>
+            <div class="note"></div>
+            	<?php echo $this->Form->create('User', 
+                                    array("class"=>"activateForm", 
+                                    'url'=>array("action"=>"activateUser","controller"=>"Users")));?>
+                   <div class="content">
+                        We send the activation code to your email.Please enter it here to activate your account.
+                        <div>                
+                            <span>Activation code</span>
+                             <?php
+                                    echo $this->Form->input('User.activation_code', array("class"=>"activation-code", 
+                                    "label"=>false,"div"=>false));
+                             ?>
+                         </div>
+                   </div>
+   
+                   <div class="buttons submits"> 
+                        <button type="submit" class="button setLoader buttonYes">Activate</button>	or 
+                        <a href="javascript:void(1)" class="onCancel">Resend Activation Code</a>
+                        <span class="ajaxTarget hide"></span>  
+                   </div>
+                   <div class="notification" 
+                   	    mistake="Activation code is invalid or account is already activated."
+                        success="Account is now activated.">
+                   </div>
+                <span class="ajaxTarget hide"></span>   
+               <?php echo $this->Form->end(); ?>  
+        </div>    
+        <?php endif; ?>
+        
+        
+        <div class="step-2 <?php echo $classStep2?>"> 
+            <div class="head">Step 2 - Enter Personal Details (2 of 3)</div>
+            <div class="note"></div>
+            
+            <?php echo $this->Form->create('User', 
+                                    array("class"=>"saveNewDetailsForm", 
+                                    'url'=>array("action"=>"saveNewDetails","controller"=>"Users")));?>
+            <div class="content">
+            	
+                
+                
+                <ul class="blocked">
+                      <li> <span>First Name</span> 
+					  			<?php echo $this->Form->input("User.first_name", 
+									  array_merge($noInputOptions, array("title"=>"Please input your first name.", 
+									  "class"=>"poshytip")));?> </li>
+                      <li> <span>Last Name</span> 
+					  			<?php echo $this->Form->input("User.last_name", array_merge($noInputOptions,
+								array("title"=>"Please input your last name.", 
+									  "class"=>"poshytip")));?>   </li>
+                     
+                     
+                      
+                    </ul>
+
+                
+            </div>
+            <div class="buttons submits"> 
+                
+                    
+                    <button type="submit" class="button setLoader buttonYes">Save</button>
+                    <span class="ajaxTarget hide"></span>
+                
+            </div>
+             <div class="notification" 
+                   	    mistake="Firstname and Lastname is required."
+                        success="Personal details has been saved.">
+                   </div>
+                <span class="ajaxTarget hide"></span>   
+              
+           <?php echo $this->Form->end(); ?>    
+            
+        </div>   
+        
+ 
+ 
+ <?php echo $this->Form->create('User', 
+                                    array("class"=>"saveNewDatingsForm", 
+                                    'url'=>array("action"=>"saveNewDatings","controller"=>"UsersDatings")));?>
+<div class="step-3 <?php echo $classStep3?>">
+  <div class="head">Step 3 - Looking for a textmate? (3 of 3)</div>
+  <div class="note"></div>
+  <div class="content">
+    <ul class="blocked widest">
+      <li> <span>My mobile network</span>
+        <?php
+                   $network = array(1=>"Globe",2=>"Smart", 3=>"Sun");
+                   echo $this->Form->input('User.network', array('options' => $network, 'empty' => '', "selected"=>"", 
+                                  "label"=>false,"div"=>false));
+                ?>
+      </li>
+      <li> <span>My mobile number</span> <?php echo $this->Form->input("User.mobile_number", array("value"=>"", 
+                                  "label"=>false,"div"=>false));?> </li>
+    </ul>
+    <ul class="blocked widest">
+      <li> <span>I'm looking for a </span>
+        <?php
+                             $gender = array(1=>"Male",2=>"Female", 3=>"Male and Female", 4=>"Gay", 5=>"Lesbian", 6=>"All");
+                             echo $this->Form->input('UsersDating.gender', array('options' => $gender, 
+                                                     "label"=>false,"div"=>false,"empty"=>''));                  
+                          ?>
+      </li>
+      <li> <span>Between the ages of</span>
+        <?php
+                               $age = array(1=>"10 - 18",2=>"18 - 25", 3=>"25 - 30", 
+                                            4=>"30 - 38", 5=>"38 - 45", 6=>"45 - 55", 7=>"55 - above", 8=>"Any");
+                               echo $this->Form->input('UsersDating.age', array('options' => $age, "label"=>false,"div"=>false, 
+                                                       "empty"=>''));
+                            ?>
+      </li>
+      
+       <li> <span>Message</span>
+         <textarea class="textarea inputDatings autoGrow poshytip" 
+        name="data[UsersDating][message_status]" title="example: I'm looking for a textmate...",
+													  ></textarea>
+        <div class="textarea-bottom"></div>
+      </li>
+    </ul>
+    
+   
+        <div class="submits">
+          <button type="submit" class="button setLoader">Save</button>
+        </div>
+        <div class="notification" 
+                                mistake ="Please input your message." 
+                                success="Textmate preferences has been saved."> </div>
+     
+    
+  </div>
+</div>
+<span class="ajaxTarget hide"></span>   
+<?php echo $this->Form->end(); ?> 
+ 
+ 		
+ 
+        
+        	
+    </div>
+</div>    

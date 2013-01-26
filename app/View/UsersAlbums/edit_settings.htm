@@ -1,0 +1,52 @@
+<?php
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$config = Configure::read("Album");
+	$privacies = array("0"=>"", "1"=>"Public", "2"=>"Friends", "3"=>"Only Me");
+	
+	$usersPhoto = $this->data["UsersAlbumsPhoto"];
+	foreach($usersPhoto as $photo):
+		$photoCover = $photo["photo"];
+		if($photo["album_cover"] == 1 ):
+			$photoCover = $photo["photo"];
+			break;	
+		endif;
+	endforeach;
+	$photoCover = "?w=130&r=4:5&s=" . $config["photo"]["path"] . $photoCover;	
+?>
+
+<?php echo $this->Form->create('UsersAlbum', array("class"=>"editAlbumSettingsForm", "action"=>"saveSettings", "id"=>mt_rand(12,123456789)));?> 
+	  <div class="cover cleared"> 
+             <ul class= "compact cleared">
+                <li class="image"> <?php echo $this->Html->image($photoCover, array("class"=>"photoHolder border")); ?> </li>
+                <li class="full">
+                  <span>Album Name</span>
+                  <?php echo $this->Form->input("UsersAlbum.album_name", array_merge($noInputOptions));?>
+                </li>
+                <li class="full">
+                  <span>Comment Privacy</span>
+                 <?php
+						echo $this->Form->input('UsersAlbum.comment_privacy', 
+						array_merge(array("class"=>"privacy","options"=>$privacies),$noInputOptions));
+				  ?>
+                </li>
+                <li>
+                  <span>Show Privacy</span>
+                 <?php
+						echo $this->Form->input('UsersAlbum.show_privacy', 
+						array_merge(array("class"=>"privacy", "options"=>$privacies),$noInputOptions));
+				?>
+                </li>
+          </ul>
+      </div>
+      <div class="notification success" 
+            mistake ="" 
+            success="Album settings has been saved.">
+            Album settings has been saved.
+      </div>
+      
+     <button type="submit" class="button setLoader commentButton">Save Settings</button>
+         or 
+     <?php echo $this->Html->link("Back to My Albums",array("controller"=>"my-albums", "action"=>"")); ?>
+     
+ 	<span class="ajaxTarget hide"></span> 
+<?php echo $this->Form->end(); ?> 

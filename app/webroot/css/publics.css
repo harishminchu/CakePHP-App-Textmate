@@ -1,0 +1,62 @@
+.box.post  { border-top:none;}
+h3 { font-size:18px; font-weight:normal; padding-top:0;}
+.subject h3 { font-size:12px; font-weight:bolder}
+.subject {height:25px; margin:5px 0 0 0}
+/* posts */
+.public .textarea {}
+.container.middle {width: 732px;}
+.public .posted  { width:72%;}
+.public .box.post .textarea { width:700px;  background-image: url("../img/post-textarea-long.png");}
+.public .box.post .textarea-bottom { background:url("../img/post-textarea-bottom-long.png");  width:710px;}
+.public .bordered { margin:0 0 5px 0}
+
+/* info */
+.public div.info { font-weight:bold; font-size:11px;}
+.public div.info { margin-left:10px}
+.public div hr { background-color:#DDDDDD; height:1px; border:0; float:right; width:82%; margin:10px 0 0 0}
+.public .info { width:auto; margin:20px 0 0 0}
+.public .info .label, .public .info .text { padding:2px; font-weight:normal}
+.public .info .label { padding-left:20px; color:#666666}
+.public .info .label { width:230px; text-align:left}
+.public .info .text { width:450px; color:#333333}
+
+/* friends */
+.friends img { padding:0 10px 0 0 } 
+.friends .count { font-weight:normal}
+.friends .blocked { margin:15px 0 0 0}
+
+/* datings */
+.datings { font-size:11px; color:#333333; margin:20px 0 0 0} 
+.mobile, .interest { padding:0 0 0 5px}
+.datings .message-status { padding:5px; margin:0 0 10px 0; width:600px}
+
+/* albums */
+div.albums { margin:5px 0 0 0px}
+div.albums h3 {  font-size:12px; line-height:16px; padding:3px 0 0 0}
+div.albums span { font-weight:normal; display:block; clear:both}
+div.albums li.image { padding:8px 8px 12px 8px}
+div.albums a { font-size:13px; font-weight:bold}
+
+/* albums photos  */
+.photos {}
+.photos div{ font-size:11px}
+.photos .gallery-container { border:1px solid #DDDDDD; padding-bottom:5px; border-top:0}
+.photos div.content.gallery { width:500px; margin:0}
+.photos .comment {margin-left:0px; width:385px; margin-top:10px;}
+.photos .comment-photo { width:530px}
+.photos .comment-photo .strong { font-size:11px;}
+.photos .comment-photo a{ font-weight:normal}
+.photos .comment-photo .message { margin:5px 0 5px 0; padding-bottom:0;}
+.photos span.hide { display:none}
+.photos .photo-comments { margin:10px 0 0 0}
+.photos .caption { line-height:17px;}
+.photos .navigation { margin-top:28px;}
+.photos span.title { font-weight:bold}
+.photos .subject { padding-bottom:0; width:530px; background:none}
+.photos .content-comments { clear: both;}
+.photos label.left, .photos  label.right { width:150px; padding-left:0;}
+.photos  label.right { text-align:right}
+.photos .gallery-container { padding:10px;}
+
+
+

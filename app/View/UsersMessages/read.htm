@@ -1,0 +1,101 @@
+<div class="readMessages">
+	<?php 
+        $this->loadHelper("Time");
+            
+        $config = Configure::read("User");
+        
+        $authUserId = $this->Session->read('Auth.User.id');
+        $authPhoto = $this->Session->read('Auth.User.photo');
+        $authUsername = $this->Session->read('Auth.User.username');
+        $authName = $this->Session->read('Auth.User.first_name') . " " .  $this->Session->read('Auth.User.last_name');
+        
+        if($authPhoto != $config["photo"]["bignone"] ):
+            $authPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $authPhoto;		
+        else:
+            $authPhoto = $config["photo"]["smallnone"];
+        endif;
+        
+        foreach($dataUserSent as $post) :
+            $acitivityTypeImage = "reply";
+            $imageNotification = $this->Html->image("notification.jpg");
+            $postedPhoto = null;
+            
+            $message = $post["UsersMessage"];
+            $profile = $post["Profile"];
+            $type = $message["type"];
+            
+            $time = $this->Time->timeAgoInWords($message["created"]);
+            $postedMessage = $message["message"];
+			
+            $user = $post["User"];
+            $name = $user["first_name"] . " " . $user["last_name"];
+                
+            $messageId = $message["id"];
+            $username = $user["username"];
+            
+            if(!empty($user)):
+                $smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+            else:
+                $smallPhoto = $config["photo"]["smallnone"];
+            endif;
+        
+            $usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+            $profilePhoto = $this->Html->image("$smallPhoto", array('class' => 'border smallPhoto', "width"=>48, "height"=>48));
+                
+            if ($message["photo"] != ""):
+                $activityPhotoPath = Configure::read("Message.photo.path");	
+                $postedPhotoPath = "?w=90&r=4:3&s=" . $activityPhotoPath . $message["photo"];	
+                $postedPhoto = $this->Html->image($postedPhotoPath, array("class"=>"activity-photo fancybox"));
+            endif;
+    ?>
+         
+             <!----------------------------------------------------------
+                message start
+             ----------------------------------------------------------->
+            <div class="posted postedBox">
+              <div class="message">
+                <div class="left"> <?php echo $profilePhoto ?> </div>
+                <div class="right marginbottom5">
+                  <div> <?php echo($usernameLink); ?> </div>
+                  <span class="paragraph"> <?php echo $postedMessage?> </span> <?php echo $postedPhoto ?>
+                  <ul class="inline margintop8">
+                    <li class="nopadding"></li>
+                    <li class="ago small w200"><?php echo $time?></li>
+                    <li class="tright w200 right"> 
+                    <a href="#delete" class="onDeletePost showPopup" param_id="<?php echo $message['id']?>">Delete</a> 
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+           <!----------------------------------------------------------
+                message end
+            ----------------------------------------------------------->
+    <? endforeach; ?>
+</div>
+    
+    <!----------------------------------------------------------
+        message start ajax template
+    ----------------------------------------------------------->
+    <div class="posted hide postedBox clonedPostedElement">
+      <div class="message">
+        <div class="left"> <?php echo $this->Html->image($authPhoto, array('class' => 'border smallPhoto', "width"=>48, "height"=>48)); ?> </div>
+        <div class="right marginbottom5"> 
+        <?php echo($this->Html->link($authName, "/profile/" . $authUsername, array("class"=>"username strong"))); ?> 
+        <span class="paragraph postedMessage"></span>
+          <ul class="inline margintop8">
+            <li class="nopadding"><img alt="" src="/img/icons/post.png"></li>
+            <li class="ago small dateCreated"></li>
+            <li> <a href="#delete" class="onDeletePost showPopup" param_id="0">Delete</a> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!----------------------------------------------------------
+        reply
+    ----------------------------------------------------------->
+	<?php echo $this->element("UsersMessages/Reply")?>
+	<div class="margintop8 clear">
+		<?php echo  $this->Html->link("Back to inbox ", array("controller"=>"messages", "action"=>"inbox"), array("class"=>"back")); ?>
+	</div>

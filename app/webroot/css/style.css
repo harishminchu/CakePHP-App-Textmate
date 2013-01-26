@@ -1,0 +1,158 @@
+@import url("reset.css");
+.page:after, .cleared:after, .posted:after, .message:after{clear:both;display:block;visibility:hidden;overflow:hidden;height:0 !important;line-height:0;font-size:xx-large;content:" x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ";}
+
+body{background:#fff;font:12px/20px Tahoma,Helvetica,sans-serif;color:#222;}
+a:link, a:visited { color:#336699; text-decoration: none;}
+img { vertical-align:middle}
+h3, h2, h4 { color: #666666;}
+h3 { font-size:1.3em; font-weight:bold; padding:4px 0 8px 2px}
+strong { font-weight:bold; font-size:11px;  color:#666666; }
+
+/* parent */
+.page, .header ul, .main-menu ul{_text-align:left; width:950px;margin:0 auto;} 
+
+/* common */
+.hide {display:none}
+.show {display:block}
+.left {float:left}
+.right {float:right}
+.middle { float:left}
+.clear {clear:both}
+.liquid {width:auto;margin:0;}
+.tright { text-align:right; }
+.tleft { text-align:left}
+.tright { text-align:right}
+.vmiddle { vertical-align:middle}
+.vtop { vertical-align:top}
+.strong { font-weight:bold}
+.absolute { position:absolute;}
+.small { font-size:11px; font-weight:normal} 
+.block {display:block}
+.inline {display:inline}
+.inleft { float:left}
+.auto { width:auto}
+.loader { display: none}
+.red { color:#990000}
+.divider { border-top:1px solid #DDDDDD; height:0px;}
+
+/* header */
+.header { background:#336699;  height:80px}
+.header ul {margin:auto; padding:10px 0 0 0}
+.header a { color:#FFFFFF}
+
+/* margins */
+.margin5{ margin:5px;}
+.margintop3{ margin-top:3px;}
+.margintop5{ margin-top:5px;}
+.margintop8{ margin-top:8px;}
+.margintop20{ margin-top:20px;}
+.margintop10{ margin-top:10px;}
+.marginleft5{ margin-left:5px;}
+.marginright5{ margin-right:5px;}
+.marginbottom10{ margin-bottom:10px;}
+.marginbottom5{ margin-bottom:5px;}
+.marginnone { margin:0;}
+
+
+/* forms */
+input, select, textarea { width: 250px; font-size: 11px; padding:5px; border:1px solid #CCCCCC;color:#333333; resize:none; margin-right:5px}
+select {width:262px}
+select.privacy { width:80px}
+select.m { width:110px;}
+select.d { width:52px;}
+select.y { width:90px; margin:0 1px 0 0}
+button {background-image: url(../img/button-bg.png); font-size:12px;color: #FFFFFF;font-weight: 700;padding: 5px;}
+button {background-position: 0 1px;background-repeat: repeat-x;border-radius: 3px 3px 3px 3px;cursor:pointer; }
+button {background-color: #336699;border: 1px solid #336699; margin:0 5px 0 0}
+button:hover { background:#346592}
+.medium input { width: 162px;}
+.medium select { width:172px}
+
+/* subject */
+.subject { background:url(../img/border.jpg) repeat-x; height:30px; background-position:center; padding:5px 0 2px 0; margin-bottom:10px}
+.subject h3 { background:#FFFFFF; display:inline; padding-right:4px}
+
+/*  menus */
+.main-menu { height:45px; background:url(../img/main-menu-bg.png) repeat-x; font-size:18px; padding-top:10px}
+.left-menu { width:174px; height:auto;  }
+.left-menu img { margin:0 5px 0 0}
+
+/* compact */
+ul.compact li { float:left; padding:0 10px 0 0}
+ul.compact li span{ display:block; color:#666666; font-weight:bold; font-size:11px}
+ul.compact li.options { clear:both; margin:5px 0 0 140px}
+ul.compact li.options a { padding:0 5px 0 0}
+ul.compact li.image { padding:0 10px 0 0}
+
+/* inlined */
+ul.inlined li { float:left; padding:0 10px 0 0}
+ul.inlined span { color:#666666; font-weight:bold; font-size:11px}
+ul.medium li { width:180px}
+
+/* itemized */
+ul.itemized li { clear:both;min-height:50px; margin:5px 0 0 0}
+ul.itemized li img{ padding:0 10px 0 5px; float:left}
+ul.itemized li label { float:left; width:50%; padding:0;}
+
+/* blocked */
+ul.blocked { margin:0 0 20px 0}
+ul.blocked span { width:80px; float:left; color:#666666; font-weight:bold; font-size:11px}
+ul.blocked.wide span { width:100px} 
+ul.blocked.wider span { width:120px}
+ul.blocked.widest span { width:200px} 
+ul.blocked li { padding:0 10px 0 0; margin:0 0 5px 0}
+ul.blocked li.submit { margin:15px 0 0 80px}
+ul.blocked.wide li.submit { margin:15px 0 0 100px}
+ul.blocked.wide small { margin-left:100px; color:#666666}
+ul.blocked.wider li.submit { margin:15px 0 0 120px}
+ul.blocked.widest li.submit { margin:15px 0 0 200px}
+ul.blocked.wider small { margin-left:120px; color:#666666}
+
+/* bordered */
+ul.bordered li { border-bottom:1px solid #DDDDDD; padding:3px;}
+ul.bordered li.noborder { border:0;}
+
+/* box */
+.box {padding:6px; margin:auto; clear:both; border:1px solid #DDDDDD; background:url(../img/box-bg.jpg)}
+
+/* error */
+input.error, select.error, textarea.error { border:1px solid #990000}
+label.error {font-size:0px;}
+
+/* notification */
+.notification {padding:3px 0 3px 25px; color:#333333; display:none; margin:3px 0 3px 0; font-size:11px;  }
+.notification.w200 { width:200px;}
+.notification.mistake { border:1px solid #FFE6E6; background:url(../img/icons/error.png) #FFFFDF no-repeat 5px center}
+.notification.success { border:1px solid #FFFF99; background:url(../img/icons/yes.png) #FFFFDF no-repeat 5px center}
+.notification span { line-height:15px; padding:0 0 0 5px;}
+
+/* upload file */
+.file-upload{ font-size:18px; line-height:15px;opacity: 0.0; -moz-opacity: 0.0; filter: alpha(opacity=00); cursor:pointer}
+.file-bg { background:url(../img/upload-photo.png) no-repeat; height:30px; cursor:pointer}
+.file-bg:hover {background:url(../img/upload-photo.hover.png) no-repeat;}
+.file-bg-small{ background:url(../img/upload-photo-small.png) no-repeat; height:30px;}
+.file-bg-small .file-upload {font-size:12px; }
+.file-bg-button {background:url(../img/upload-photo-button.png) no-repeat; height:26px}
+.file-bg-button:hover {background:url(../img/upload-photo-button-hover.png) no-repeat;}
+.file-bg-button .file-upload { font-size:10px}
+
+/* footer */
+.footer { height:40px; margin:50px auto 0 auto; padding:0; border-top:1px solid #CCCCCC}
+
+/* popup-box and lookup-box */
+.popup-box { width:400px; height:160px; }
+.popup-box .head, .lookup-box .head { font-size:12px; padding:3px 0 3px 10px; color:#FFFFFF; font-weight:bold}
+.popup-box .buttons{ padding: 10px 5px 5px 5px; border-top: 1px solid #CCCCCC; width:365px; margin:auto}
+.popup-box .content {padding:0 10px 10px 15px; min-height:44px; text-align:center; font-weight:bold}
+.popup-box .note { min-height:27px; padding:0 10px}
+.popup-box .content span { padding:0 5px 0 0}
+.popup-box .head, .lookup-box .head {background:#336699;}
+
+/* inlines */
+ul.inline li { float:left}
+ul li.label { float:left; width:80px; text-align:right; font-weight:bold; }
+ul li.text { float:right; width:270px; }
+div.label { float:left;font-weight:bold; }
+div.text { float:right;  }
+div.block { display:block;}
+

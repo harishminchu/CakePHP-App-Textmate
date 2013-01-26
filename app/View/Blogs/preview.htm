@@ -1,0 +1,13 @@
+<?php 
+	$entry = $dataBlogEntry["Blog"];
+	$this->loadHelper("Time");
+	$time = $this->Time->timeAgoInWords($entry["created"]);
+?>
+
+<div>
+	<h3><?php echo $entry["title"]; ?> <span class="small"><?php echo $time?></span> </h3>
+	<?php echo $entry["entry"]; ?>	
+</div>
+<div class="margintop8">
+	 <?php echo $this->Html->link("Edit This Entry",array("controller"=>"blogs", "action"=>"edit/" . $entry['id'])); ?>
+</div>

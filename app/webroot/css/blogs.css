@@ -1,0 +1,36 @@
+.blogs .middle { margin:0 0 0 70px; font-size:11px; width:650px;}
+
+
+/* browse */
+.blogs .entry { min-height:50px; width:575px; float:right; margin:0 0 0 10px;}
+.blogs .entry h3 { padding:0; font-size:13px;} 
+.blogs .left.user img { margin:5px 0 0 0}
+.blogs .options { margin:5px 0 0 58px; clear:both; padding:10px 0 0 }
+.blogs .options small { display:block; float:left; font-weight:normal; font-size:11px; padding:0 20px 0 0}
+
+.blogs .options a { padding:0 10px 0 3px}
+
+/* add */
+.blogs ul.fields li { padding:0 0 10px 0px}
+.blogs ul.fields li span, .blogs ul.fields li input{ display:block}
+.blogs ul.fields li span { font-weight:bold; color:#666666}
+.blogs ul.fields li span.small { font-size:10px; font-weight:normal}
+.blogs ul.fields li label {  float:right}
+
+
+/*comments */
+.blogs .message div.right { width:430px}
+.blogs .message div.left { padding:8px 0 0 0}
+.blogs .message { border-bottom:1px solid #EAEAEA; padding:5px 0 5px 0}
+.blogs .message .ago { color:#999999}
+
+.blogs textarea { border:0;}
+.blogs .box.comment  { margin:0;}
+.blogs .content-comments  {width:490px; clear:both; margin:0; padding:0; font-size:11px;}
+.blogs .middle .subject h3 { font-size:11px;}
+.blogs .middle .subject { margin-bottom:0;}
+
+/* box comment */
+.box.comment { width:386px; margin:0; background-color:#FCFCFC}
+.box.comment .textarea{ width:376px; height:16px; padding:5px;background:url(../img/comment-textarea.png) no-repeat;resize: none;}
+.box.comment .textarea-bottom {background:url(../img/comment-textarea-bottom.png) no-repeat; height:2px;width:386px;}

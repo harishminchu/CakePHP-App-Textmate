@@ -1,0 +1,130 @@
+<?php 
+	$noInputOptions = array("label"=>false,"div"=>false);
+	if(empty($dataMyCategories)) :
+		$dataMyCategories = array("Others", "Animals","Educational","Instructional","Stock Footage",
+							      "Comedy", "Science & Technology");
+	endif;
+	$action = $this->action;
+	$allowedActions = array("manageVideos", "myVideos");
+?>
+
+<div class="hide"> 
+  <?php if($action == "search") : ?>
+          <div id="addVideo" class="videos popup-box addVideo popupBox">
+                <?php echo $this->Form->create('Popup', 
+                                    array("class"=>"addVideoForm", 
+                                    'url'=>array("action"=>"addVideo","controller"=>"UsersVideos")));?>
+                <div class="head">Add Video</div>
+                <div class="note"> </div>
+                 <div class="content">
+                     <ul class="blocked">
+                         <li> <span>Category</span>
+                             <?php
+                                    echo $this->Form->input('UsersVideo.category_id', 
+                                    array('options' =>$dataMyCategories, "class"=>"categoryId", 
+									"label"=>false,"div"=>false));
+                             ?>
+                         </li>
+                         <li> <span>Title</span>
+                                <?php echo $this->Form->input("UsersVideo.title", 
+                                 array_merge(array("class"=>"title"), $noInputOptions));?>
+                         </li>
+                         <li>
+                          <span>Description</span>
+                               <?php echo $this->Form->input("UsersVideo.description",
+                              array('rows'=> '2',"label"=>false,"div"=>false, "class"=>"description"));?>
+                          </li>
+                     
+                     </ul>  
+                 </div>      
+                 <div class="buttons clear"> 
+                        <input type="hidden" name="data[UsersVideo][video_id]"  class="videoId" />
+                        <input type="hidden" name="data[UsersVideo][url]"  class="videoUrl" />
+                        <input type="hidden" name="data[UsersVideo][category_name]"  class="categoryName" />
+                        <input type="hidden" name="data[UsersVideo][thumb_url]"  class="thumbUrl" />
+                        <div class="submits">
+                            <button type="submit" class="button setLoader buttonYes">Add To My Videos</button>	or 
+                            <a href="javascript:void(1)" class="onCancel">Cancel</a>
+                            <span class="ajaxTarget hide"></span>  
+                        </div>
+                        <div class="notification"
+                            mistake ="An error occured on adding video.Try again." 
+                            success="This video has been added to your videos.">
+                 		</div>
+                 </div>	
+                 
+                 <?php echo $this->Form->end(); ?>  
+         </div>
+    <?php endif; ?>  
+    
+	<?php if(in_array($action, $allowedActions)) : ?>
+        <div id="delete" class="popup-box delete popupBox">
+            <div class="head">Delete</div>
+            <div class="note"></div>
+            <div class="content">Are you sure you want to delete this <span class="messageSubject">video</span>?</div>
+            <div class="buttons"> 
+                 <?php echo $this->Form->create('Popup', 
+                                    array("class"=>"deleteVideoForm", 
+                                    'url'=>array("action"=>"deleteVideo","controller"=>"UsersVideos")));?>
+                     <input type="hidden" name="data[type_id]"  class="typeId" />
+                     <input type="hidden" name="data[param_id]"  class="paramId" />
+                    <button type="button" class="button setLoader buttonYes">Yes</button>	or 
+                    <a href="javascript:void(1)" class="onCancel">Cancel</a>
+                    <span class="ajaxTarget hide"></span>
+                <?php echo $this->Form->end(); ?>    
+            </div>	
+        </div> 
+	<?php endif; ?> 
+    
+    <?php if($action == "playVideo") : ?>
+        <div id="deleteVideoComment" class="popup-box deleteVideoComment popupBox">
+            <div class="head">Delete</div>
+            <div class="note"></div>
+            <div class="content">Are you sure you want to delete this <span class="messageSubject">comment</span>?</div>
+            <div class="buttons"> 
+                 <?php echo $this->Form->create('Popup', 
+                                    array("class"=>"deleteCommentForm", 
+                                    'url'=>array("action"=>"deleteComment","controller"=>"UsersVideos")));?>
+                     <input type="hidden" name="data[type_id]"  class="typeId" />
+                     <input type="hidden" name="data[param_id]"  class="paramId" />
+                    <button type="button" class="button setLoader buttonYesDeleteComment">Yes</button>	or 
+                    <a href="javascript:void(1)" class="onCancel">Cancel</a>
+                    <span class="ajaxTarget hide"></span>
+                <?php echo $this->Form->end(); ?>    
+            </div>	
+        </div> 
+	<?php endif; ?>   
+    
+    <?php if($action == "categoryAdd") : ?>
+    <div id="addCategory" class="popup-box addCategory popupBox">
+        <?php echo $this->Form->create('Popup', 
+                                array("class"=>"addCategoryForm",
+                                'url'=>array("action"=>"add-category","controller"=>"videos")));?>
+            <div class="head">Add New Category</div>
+            <div class="note"></div> 
+             <div class="content">
+                 <span>Category Name</span>
+                 <span>
+                     <?php echo $this->Form->input("UsersVideosCategories.category_name", 
+                            array_merge(array("name"=>"data[category_name]", "class"=>"categoryName"), 
+                            $noInputOptions));?>
+                 </span>   
+             </div>      
+             <div class="buttons clear"> 
+                    <input type="hidden" name="data[type_id]"  class="typeId" />
+                    <input type="hidden" name="data[param_id]"  class="paramId" />
+                    <div class="submits">
+                    	<button type="submit" class="button setLoader buttonYes">Create Category</button>	or 
+                    	<a href="javascript:void(1)" class="onCancel">Cancel</a>
+                    	<span class="ajaxTarget hide"></span> 
+                    </div>
+                     <div class="notification"
+                    	mistake ="Category name is required." 
+                    	success ="A new video category has been created.">
+                	</div> 
+             </div>	
+       <?php echo $this->Form->end(); ?>  
+   </div>
+   <?php endif; ?>   
+          
+</div>

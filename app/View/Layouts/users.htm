@@ -1,0 +1,77 @@
+<?php
+	/* Layout */
+	$action = $this->action;
+	$additionalCss = array();
+	$popupBox = "";
+	switch($action):
+		case "basicInformation":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Users.BasicInformation.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.poshytip','app', 'ajax', "users");
+			$options['validate'] = array("formclass"=>"editUserForm", "model"=>"User", "successmessage"=>__("Success", true));	
+			$additionalCss = array("jquery.poshytip");
+			$subject = "Basic Information";
+	        break;
+	    case "contactInformation":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.poshytip','app', 'ajax', "users");
+			$options['validate'] = array("formclass"=>"editUserForm", "model"=>"User", "successmessage"=>__("Success", true));
+			$additionalCss = array("jquery.poshytip");
+			$subject = "Contact Information";
+	        break;	
+		case "profilePhoto":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Photos.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox', 'jquery.poshytip','jquery.jcrop', 
+							    'app', 'ajax', "photos");
+			$options['validate'] = array("formclass"=>"editUserForm", "model"=>"User", "successmessage"=>__("Success", true));
+			$additionalCss = array('jquery.fancybox', 'jquery.jcrop');
+			$popupBox = "UsersPopupBox";
+			$subject = "Profile Photo";
+	        break;	
+		case "location":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Users.Locations.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.poshytip', 'app', 'ajax', "users");
+			$options['validate'] = array("formclass"=>"editUserForm", "model"=>"User", "successmessage"=>__("Success", true));
+			$subject = "Location";
+	        break;	
+		case "account":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Users.Account.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.poshytip', 'app', 'ajax', "users");
+			$options['validate'] = array("formclass"=>"editUserForm", "model"=>"User", "successmessage"=>__("Success", true));
+			$additionalCss = array("jquery.poshytip");
+			$subject = "Account";
+	        break;					
+	endswitch;
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo $this->Html->charset(); ?>
+<title><?php echo __('Textmate'); ?> <?php echo $title_for_layout; ?></title>
+<?php
+	echo $this->Html->meta('icon');
+	echo $this->Html->css( array_merge(array('style', 'users'), $additionalCss));
+	echo $this->Jquery->link($javaScript, $scriptBlock, $options);
+?>
+</head>
+<body>
+
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+
+<div class="page users">
+	<div class="subject"><h3><?php echo $subject?></h3></div>
+    <div class="left"> <?php echo $this->element("Menus/UsersMenu");?>  </div>
+    <div class="middle">  
+		<?php echo $content_for_layout; ?>
+    </div>    
+</div>
+<?php 
+	if($popupBox) :
+		echo $this->element("Popup/$popupBox");
+	endif;	
+?> 
+<?php echo $this->element("Footer") ?>
+</body>
+</html>

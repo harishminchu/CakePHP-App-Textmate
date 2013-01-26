@@ -1,0 +1,70 @@
+<?php
+	$this->loadHelper("Time");
+	$config = Configure::read("User");
+?>
+
+<ul class="blocked bordered">
+	<?php 
+        $i = 1;
+		foreach($dataBlogEntries as $entries) : 
+            $classFirst = "";
+			$blog = $entries["Blog"];
+			$user = $entries["User"];
+			$blogId = $blog["id"];
+            $name = $user["first_name"] . " " . $user["last_name"]; 	
+            $username = $user["username"];
+			$usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+			            
+            if(!empty($user["photo"])):
+                $smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+            else:
+                $smallPhoto = $config["photo"]["smallnone"];
+            endif;
+			
+			if($i == 1):
+				$classFirst = "first";
+			endif;
+			
+			$entry = Sanitize::html($blog["entry"], array("remove"=>true));
+			$entry = substr($entry , 0, 220) . "...";
+			$time = $this->Time->timeAgoInWords($blog["created"]);
+			
+			$title = strtolower($blog["title"]);
+			$slugTitle = Inflector::slug($title, "-");
+			$readMore = $this->Html->link("read more",array("controller"=>"blogs", "action"=>"view-entry/$slugTitle/$blogId"));
+			$linkTitle = $this->Html->link($blog["title"],array("controller"=>"blogs", "action"=>"read-more/$slugTitle"));
+			$i++;
+        ?>
+        <li class="cleared <?php echo $classFirst?>">
+			<div class="left">
+				<div class="left user">
+					<?php echo $this->Html->image($smallPhoto, array('class' => 'left', "width"=>48, "height"=>48)); ?>
+                </div>
+                <div class="entry">
+                	<h3><a href=""><?php echo $linkTitle?></a></h3>
+                	<div><?php echo $entry?> <?php echo $readMore?></div>
+                </div>    
+            </div>
+            <div class="options">
+				<small>Posted <?php echo $time?> by <?php echo $usernameLink?> </small> 
+                <div class="right">
+					<?php echo $this->Html->image("icons/edit-m.png"); ?>
+                    <a href="javascript:void(1)" class="onConfirmRequest setLoader" param_id="<?php echo $blog["id"]?>">
+                        Edit Entry
+                    </a>
+                    
+                    <?php echo $this->Html->image("icons/delete-m.png"); ?>
+                    <a href="#ignore" class="popupbox showPopup onCancelFriend" 
+                        param_id="<?php echo $blog["id"]?>"
+                        content="Are you sure to ignore the request?" 
+                        head="Ignore Request" 
+                        type="2">
+                        Delete
+                    </a>
+                </div>
+                               
+        	</div> 
+        </li> 
+    <?php endforeach; ?>
+
+</ul>  

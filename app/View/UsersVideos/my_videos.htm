@@ -1,0 +1,75 @@
+<div class="my-videos videoContainer">
+	<ul class="lists block">
+    	<?php 
+			$config = Configure::read("Video");
+			$this->loadHelper("Time");
+									 
+			foreach($dataMyVideos as $records):
+				$countVideo = count($records["UsersVideo"]);
+				if($countVideo) :
+					foreach($records["UsersVideo"] as $video):
+						$videoCover = $video["thumb_url"];
+						if($video["photo"] != ""):
+							$videoCover = $video["photo"];
+							$videoCover = "?w=177&h=132&r=4:3&s=" . $config["photo"]["path"] . $videoCover;	
+						endif;
+						if($video["category_cover"] == 1 ):
+							$videoCover = $video["thumb_url"];
+							if($video["photo"] != ""):
+								$videoCover = $video["photo"];
+								$videoCover = "?w=177&h=132&r=4:3&s=" . $config["photo"]["path"] . $videoCover;	
+							endif;
+							break;	
+						endif;
+						
+						
+	                endforeach;
+					
+					$collection = $records["UsersVideosCategory"]; 
+					$title = $collection["category_name"];
+					$description = $collection["description"];
+					$categoryId = $collection["id"];
+					$time = $this->Time->timeAgoInWords($collection["created"]);
+					
+					$link = $this->Html->link($title ,array("controller"=>"videos", "action"=>"manage-videos/$categoryId")); 
+					$photo =  $this->Html->image("$videoCover", array("height"=>132, "width"=>177));
+					$photoLink = $this->Html->link($photo ,array("controller"=>"videos", 
+								 "action"=>"manage-videos/$categoryId"),array('escape' => false))
+		
+		?>
+                    <li class="cleared <?php echo $categoryId?>">
+                        <div class="left">
+                           <?php echo $photoLink?> 
+                            <h3 class="title"><?php echo $link ?></h3>
+                            <span class="small"><?php echo $countVideo?> videos</span>
+                            <span class="category small"><?php echo $time?></span>
+                        </div>
+                        
+                        <div class="right options">                    	
+                            <span> 
+                                <?php echo $this->Html->image("icons/manage.png"); ?> 
+								<?php echo $this->Html->link("Manage Videos",
+                                      array("controller"=>"videos", "action"=>"manage-videos/$categoryId")); ?>
+                            </span>
+                            <span> 
+                                <?php echo $this->Html->image("icons/edit.png"); ?> 
+								<?php echo $this->Html->link("Edit Video Settings",
+                                array("controller"=>"videos", "action"=>"edit-settings/$categoryId")); ?>
+                            </span>
+                            <span>
+                            	<?php echo $this->Html->image("icons/delete.png"); ?> 
+								<a href="#delete" 
+                                   param_id="<?php echo $categoryId?>" 
+                                   head="Delete Category"
+                                   content="Are you sure to delete this category and all videos under this category?"
+                                   form="users_videos_categories/deleteCategory"
+                                class="showPopup">Delete This Category</a>
+                            </span>
+                           
+                        </div>
+                    </li>
+         <?php 
+		 		endif;
+			endforeach; ?>       
+    </ul>
+</div>

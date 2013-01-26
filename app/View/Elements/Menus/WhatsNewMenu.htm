@@ -1,0 +1,16 @@
+<?php $authUsername = $this->Session->read('Auth.User.username'); ?>
+<!----------------------------------------------------------
+   	box left-menu
+----------------------------------------------------------->
+<div class="box left-menu"> 
+   <ul class="bordered">
+       
+        <li><?php echo $this->Html->image("icons/view-profile.png"); ?> 
+            <?php echo $this->Html->link("My Public Profile",array("controller"=>"profile", "action"=>$authUsername)); ?>
+        </li>
+        <li class="noborder"><?php echo $this->Html->image("icons/edit.png"); ?> 
+            <?php echo $this->Html->link("Edit My Profile",array("controller"=>"members", "action"=>"basic-information")); ?>
+        </li>
+    
+   </ul>
+</div>

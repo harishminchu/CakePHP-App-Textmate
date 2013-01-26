@@ -1,0 +1,22 @@
+<?php
+	$action = $this->action;
+?>	
+<div class="hide">
+   <?php if($action == "friendRequests") :  ?>
+       <div id="ignore" class="popup-box ignorePopup popupBox">
+            <div class="head">Remove Profile Photo</div>
+            <div class="note"></div>
+            <div class="content">Are you sure you want to remove this <span class="messageSubject">comment</span>?</div>
+            <div class="buttons"> 
+                 <?php echo $this->Form->create('Popup', 
+                            array("class"=>"cancelFriendForm", 'url'=>array("action"=>"cancelFriend","controller"=>"UsersFriends")));?>
+                    <input type="hidden" name="data[type_id]"  class="typeId" />
+                    <input type="hidden" name="data[param_id]"  class="paramId" />
+                    <button type="button" class="setLoader buttonYes">Yes</button>	or 
+                    <a href="javascript:void(1)" class="onCancel">Cancel</a>
+                    <span class="ajaxTarget hide"></span>
+                <?php echo $this->Form->end(); ?>    
+            </div>	
+        </div> 
+    <?php endif;  ?>
+</div>

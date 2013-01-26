@@ -1,0 +1,34 @@
+<?php
+	$action = $this->action;
+	if($action == "read"):
+		$action = "inbox";
+	endif;
+	$selected["inbox"] = "";
+	$selected["sent"] = "";	
+	$selected["deleted"] = "";	
+	$selected["compose"] = "";	
+	$selected[$action] = "strong";
+?>
+
+<div class="box left-menu"> 
+   <ul class="bordered">
+        <li>
+			<?php echo $this->Html->image("icons/inbox.png"); ?> 
+            <?php echo $this->Html->link("Inbox",array("controller"=>"messages", "action"=>"inbox"),
+										 array("class"=>$selected["inbox"])); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/view-profile.png"); ?> 
+            <?php echo $this->Html->link("Sent Messages",array("controller"=>"messages", "action"=>"sent"),
+										array("class"=>$selected["sent"])); ?>
+        </li>
+         <li><?php echo $this->Html->image("icons/deleted.png"); ?> 
+            <?php echo $this->Html->link("Deleted Messages",array("controller"=>"messages", "action"=>"deleted"),
+									    array("class"=>$selected["deleted"])); ?>
+        </li>
+        <li class="noborder"><?php echo $this->Html->image("icons/edit.png"); ?> 
+            <?php echo $this->Html->link("Compose",array("controller"=>"messages", "action"=>"compose"),
+										array("class"=>$selected["compose"])); ?>
+        </li>
+      
+   </ul>
+</div>

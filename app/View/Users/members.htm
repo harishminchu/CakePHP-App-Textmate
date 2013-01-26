@@ -1,0 +1,150 @@
+<?php $config = Configure::read("User"); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php echo $this->Html->charset(); ?>
+	<title> <?php echo __('Textmate - Members'); ?> </title>
+	<?php
+		echo $this->Html->meta('icon');
+		echo $this->Html->css( array('style', 'list', 'jquery.fancybox', 'jquery.poshytip'));
+		
+		$scriptBlock  = array("App.ready()", "Ajax.ready()", "Members.ready()");
+		$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox', 'jquery.poshytip', 'app', 'ajax', 'members');
+		$options['rewrite'] = false;
+		echo $this->Jquery->link($javaScript, $scriptBlock, $options);
+	?>	
+</head>
+<body>
+
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+<!----------------------------------------------------------
+P page start
+----------------------------------------------------------->
+<div class="page">
+	
+    <!------------------------------------------------------
+    L left start
+    ------------------------------------------------------->
+    <div class="container left">
+    	<img src="/img/temp/side-search.jpg" />
+    </div>
+    <!------------------------------------------------------
+	L left end
+	------------------------------------------------------->
+    
+    <!------------------------------------------------------
+	R right start
+	------------------------------------------------------->
+	<div class="container middle">
+    	<h3>Members</h3>
+        <div class="angle"> </div>
+        <?php 
+		foreach($dataMembers as $member) : 
+				$user = $member["User"];
+				$name = $user["first_name"] . " " . $user["last_name"]; 	
+				$hideAddFriend = "";
+				$hideCancelFriend = "hide";
+				$requestingAdd = "";
+				$requestGranted = false;
+				$username = $user["username"];
+				$usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+				
+				if(!empty($user["photo"])):
+					$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+				else:
+					$smallPhoto = $config["photo"]["smallnone"];
+				endif;
+				
+				if(in_array($user["id"], $dataUsersFriend)):
+					$hideAddFriend = "hide";
+					$hideCancelFriend = "";
+					$requestingAdd = "requestingAdd";
+				endif;
+				if(in_array($user["id"], $dataRequestGranted)):
+					$requestGranted = true;
+				endif;
+  		?>
+         <!------ item start ---------------------------------->
+         <div class="item">
+            <!--------------------------------------------------
+             INL inleft start
+            --------------------------------------------------->
+            <div class="inleft">
+                <div class="inlined">
+					<div class="photo">
+						<?php echo $this->Html->image($smallPhoto, array('class' => 'border', "width"=>48, "height"=>48)); ?>
+                	</div>
+                    <div class="details">
+                    	<?php echo($usernameLink); ?>
+                        <span class="small">
+                    		10 friends
+                        </span>    
+                    </div>
+                </div>
+            </div>
+            <!--------------------------------------------------
+             INL inleft end
+            --------------------------------------------------->
+            
+            <!--------------------------------------------------
+             INR inright start
+            --------------------------------------------------->
+            <div class="inright w310">
+            	<ul class="inlined options userId-<?php echo $user["id"]?>">
+                	<li>
+                        <?php
+							if(!$requestGranted):
+						?>
+								<?php echo $this->Html->image("icons/confirm.png", array("class"=>"$hideAddFriend onAddFriend")); ?>
+                                <a href="#addFriend" class="popupbox <?php echo $hideAddFriend?> showPopup onAddFriend" type="1" 
+                                param_id="<?php echo $user["id"]?>">Add Friend</a>
+                                
+                                <?php echo $this->Html->image("icons/ignore.png", array("class"=>"$hideCancelFriend onCancelFriend")); ?>
+                                <a href="#addFriend" class="popupbox <?php echo $hideCancelFriend?> 
+                                    showPopup onCancelFriend" param_id="<?php echo $user["id"]?>"
+                                    content="Are you sure to cancel the request?" 
+                                    head="Cancel Request" 
+                                    type="2">
+                                    Cancel Request
+                                </a>
+                                <a class="poshytip <?php echo $requestingAdd?>" title="Request sent">&nbsp;</a>
+                        <?php
+						  endif;
+						  if($requestGranted): 
+						    $icon = $this->Html->image("icons/friends.png");
+						  	echo $this->Html->tag("span", $icon . " Friend");
+						  endif;	
+						?>        
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            <!--------------------------------------------------
+             INR inright end
+            --------------------------------------------------->
+      </div>
+      <!------ item end ---------------------------------->   
+		 <?php endforeach; ?>  
+    </div>
+    <!------------------------------------------------------
+	R right end
+	------------------------------------------------------->
+    
+</div>
+<!----------------------------------------------------------
+P page end
+----------------------------------------------------------->  
+
+<!----------------------------------------------------------
+F footer start
+-----------------------------------------------------------> 
+<div class="footer"></div>
+<!----------------------------------------------------------
+F footer end
+-----------------------------------------------------------> 
+<?php echo $this->element("Popupbox", array("type"=>"members"));?> 
+</body>
+</html>

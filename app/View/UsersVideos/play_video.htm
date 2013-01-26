@@ -1,0 +1,90 @@
+<?php 
+	$configVideo = Configure::read("Video"); 
+	$config = Configure::read("User");
+	
+	$userDetail = $this->Session->read('Auth.User');
+	$authUserId = $this->Session->read('Auth.User.id');
+	$authPhoto = $this->Session->read('Auth.User.photo');
+	$authUsername = $this->Session->read('Auth.User.username');
+	$authName = $this->Session->read('Auth.User.first_name') . " " .  $this->Session->read('Auth.User.last_name');
+	
+	if($authPhoto != $config["photo"]["bignone"] ):
+		$authPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $authPhoto;		
+	else:
+		$authPhoto = $config["photo"]["smallnone"];
+	endif;
+	
+	$video = $this->data["UsersVideo"];
+	$videoCover = $video["thumb_url"];
+	if($video["photo"] != ""):
+		$videoCover = $video["photo"];
+		$videoCover = "?w=480&h=360&r=4:3&s=" . $configVideo["photo"]["path"] . $videoCover;	
+	endif;
+	
+	$photo = $this->Html->image("$videoCover", array("height"=>360, "width"=>480, "class"=>"play-video")); 
+?>
+
+<div class="video-container">
+	<?php echo $this->Html->image("icons/play-big.png", array("class"=>"play-hover playHover hide"));?>
+    <a href="<?php echo $video["url"]?>" class="playVideo" >
+		<?php echo $photo?>
+    </a>
+    <iframe scrolling="auto" frameborder="0" src="" hspace="0" class="iframePlay hide" width="480" height="360"></iframe>
+    
+    <div class="details">
+    	<h3 class="marginbottom10"><?php echo $video["title"];?>
+        	<small class="views"> Views : <?php echo $video["views"];?></small></h3> 
+		<?php echo $video["description"];?>
+    </div>
+</div>
+
+<div class="content-comments">
+    <?php echo $this->element("UsersVideos/CommentList");?>
+    <div class="loadVideoComments video-comments"></div>
+       
+    <!----------------------------------------------------------
+        box comment start
+    ----------------------------------------------------------->
+    <div class="subject"><h3>Post your comment</h3></div>
+    <div class="box comment videoCommentBox clear">
+      <?php echo $this->Form->create('UsersVideos', 
+                        array("class"=>"videoCommentForm", "action"=>"addComment", "id"=>mt_rand(12,123456789)));?>
+                <textarea class="textarea inputComment autoGrow" name="data[comment]"></textarea>
+                <div class="textarea-bottom"></div>
+                <div class="margintop8">
+                    <button type="submit" class="exact setLoader videoCommentButton">Post Comment</button>
+                    <img alt="loading..." src="/img/icons/loader.gif" class="loader">
+                </div>
+                <span class="ajaxTarget hide"></span>
+     <?php echo $this->Form->end(); ?>
+    </div>
+    <!----------------------------------------------------------
+        box comment end
+    -----------------------------------------------------------> 
+        
+        
+    <!----------------------------------------------------------
+        posted start ajax template
+     ----------------------------------------------------------->
+     <div class="posted hide commentVideoBox clonedVideoCommentElement">
+        <div class="message">
+          <div class="left"> 
+               <?php echo $this->Html->image($authPhoto, array('class' => 'border smallPhoto', "width"=>48, "height"=>48)); ?>
+          </div>
+          <div class="right marginbottom5">
+          <?php echo($this->Html->link($authName, "/profile/" . $authUsername, array("class"=>"username strong"))); ?>
+          
+          <span class="paragraph commentMessage"></span>
+            
+            <div class="clear">
+              	   <label class="ago small left"><a class="dateCreated"></a></label> 
+                   <a href="#deleteVideoComment" class="right onDeleteComment showPopup" param_id="">Delete</a>
+            </div>  
+            
+          </div>
+      </div>
+    </div>  
+    <!----------------------------------------------------------
+        posted end ajax template
+    -----------------------------------------------------------> 
+</div>	

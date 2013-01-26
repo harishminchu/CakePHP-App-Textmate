@@ -1,0 +1,35 @@
+<?php
+	$user = $dataUserDetail["User"];
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$privacies = array("0"=>"", "1"=>"Public", "2"=>"Friends", "3"=>"Only Me");
+?>
+<?php echo $this->Form->create('Users', 
+                            array("class"=>"editUserForm", "action"=>"saveUserDetail", "id"=>mt_rand(12,123456789)));?>
+
+<ul class="blocked wider">
+  <li> <span>Email Address</span>
+    	<?php
+           echo $this->Form->input('User.email', array("label"=>false,"div"=>false));
+        ?>
+  </li>
+  <li> <span>Password</span> 
+  		<?php echo $this->Form->input("User.passwords",  array("label"=>false,"div"=>false,"value"=>"", "type"=>"password",
+									  "class"=>"userPassword required", "disabled"=>"disabled", 
+									  "title"=>"Password should be minimum of 6 characters and digits"));
+		?> 
+  </li>
+  <li> <span>Confirm Password</span> 
+  	   <?php echo $this->Form->input("User.passwordc", 
+									 array("label"=>false,"div"=>false,"value"=>"", "disabled"=>"disabled", "class"=>"userPassword", "equalTo"=>"#UserPasswords",
+									 "title"=>"Please confirm password.", "type"=>"password"));?>
+ </li>
+ <li class="submit">
+        <div class="notification" 
+                    mistake ="Some account fields are necessary." 
+                    success="Your account has been saved."> 
+        </div>
+    	<button type="submit" class="setLoader">Save</button>
+    	or <?php echo $this->Html->link("Cancel",array("controller"=>"whats-new", "action"=>"")); ?> 
+  </li>
+</ul>
+<span class="ajaxTarget hide"></span> <?php echo $this->Form->end(); ?> 

@@ -1,0 +1,10 @@
+/* forms */
+.users .middle { width:650px; margin-left:100px}
+.users .notification { margin:0 0 10px 0; width:235px}
+
+/* box upload */
+.users .upload { width:280px; padding:15px 15px 5px 15px; margin:0 0 5px 0}
+.users .upload div { margin:0 0 5px 0}
+.users .upload .target-photo { position:relative}
+.users .upload .preview { width:52px; height:52px; overflow:hidden; float:right}
+.users .upload .preview img { width:50px; height:50px;}

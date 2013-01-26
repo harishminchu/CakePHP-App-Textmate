@@ -1,0 +1,10 @@
+.notifications .middle { margin-left:70px; width:600px}
+.notifications ul li img { margin:0 5px 0 0}
+.notifications ul.blocked li { padding:0;  font-size:11px;}
+.notifications ul.blocked li span { font-weight:normal;width:150px; float:right; margin-left:50px}
+
+.notifications ul.blocked.bordered li { border:0; border-top:1px solid #DDDDDD; padding:8px 0 5px 0}
+.notifications ul.blocked.bordered li.first { border:0;}
+.notifications ul.blocked li span.count { display:block; float:none}
+.notifications .options { padding:8px 0 0 0}
+.notifications .options img { margin:0 2px 0 10px}

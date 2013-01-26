@@ -1,0 +1,14 @@
+.gallery.thumb { overflow:auto;  width:90px; float:left}
+.gallery.thumb img { padding: 2px; border:1px solid #DDDDDD; margin:0 0 5px 0}
+.gallery.thumb .title, .gallery.thumb .caption { display:none}
+.gallery.thumb img.selected { border-color:#336699}
+.gallery.preview {max-width: 500px; min-height:auto; margin:0 0 0 30px; float:left; }
+.gallery.preview img.preview { margin:auto; clear:both;  border:1px solid #DDDDDD; padding:10px; margin-bottom:10px}
+.gallery.preview div, .gallery.preview span { clear:both; display:block; margin:5px 0 0 0; font-size:11px; line-height:17px;}
+.gallery.preview .title { font-weight:bold;}
+.gallery.preview .contents { width:400px}
+.gallery.preview .nav { position:absolute; margin-left:20px;width:400px; height:50px;}
+.scroll-cover, .gallery.thumb {height:425px; } 
+.scroll-cover { position:absolute;  width:30px; background-color:#FFFFFF}
+.scroll-cover  img { padding:10px 0 0 0}
+.scroll-cover .top-fix { height:170px}

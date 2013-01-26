@@ -1,0 +1,34 @@
+<?php
+	$action = $this->action;
+	$selected["recentUpdates"] = "";
+	$selected["friendRequests"] = "";
+	
+ 	$authUsername = $this->Session->read('Auth.User.username');	
+	$selected[$action] = "strong";
+	$count = "";
+	if(isset($dataTotalFriendRequest) && $dataTotalFriendRequest>=1):
+		$count = $this->Html->link(" ($dataTotalFriendRequest)",array("controller"=>"members","action"=>"friend-requests"),array("class"=>"strong")); 
+	endif;
+?>
+
+<div class="box left-menu"> 
+   <ul class="bordered">
+        <li><?php echo $this->Html->image("icons/basic.png"); ?> 
+            <?php echo $this->Html->link("Recent Updates",array("controller"=>"notifications", 
+                                         "action"=>"recent-updates"), array("class"=>$selected["recentUpdates"])); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/email.png"); ?> 
+            <?php echo $this->Html->link("Friend Requests",array("controller"=>"notifications", 
+                                        "action"=>"friend-requests"), array("class"=>$selected["friendRequests"])); echo $count ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/view-profile.png"); ?> 
+            <?php echo $this->Html->link("View My Profile",array("controller"=>"profile", "action"=>$authUsername)); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/edit.png"); ?> 
+            <?php echo $this->Html->link("Edit My Profile",array("controller"=>"members", "action"=>"basic-information")); ?>
+        </li>
+        <li class="noborder"><?php echo $this->Html->image("icons/browse-members.png"); ?> 
+            <?php echo $this->Html->link("Browse Members",array("controller"=>"members", "action"=>"")); ?>
+        </li>
+   </ul>
+</div>

@@ -1,0 +1,246 @@
+<?php 
+	
+	$config = Configure::read("User");
+	$activityPerformAction = Configure::read("Activity.performsaction");
+	$commentor = array();
+	
+	$authUserId = $this->Session->read('Auth.User.id');
+	$authPhoto = $this->Session->read('Auth.User.photo');
+	$authUsername = $this->Session->read('Auth.User.username');
+	$authName = $this->Session->read('Auth.User.first_name') . " " .  $this->Session->read('Auth.User.last_name');
+	
+	
+	if($authPhoto != $config["photo"]["bignone"] ):
+		$authPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $authPhoto;		
+	else:
+		$authPhoto = $config["photo"]["smallnone"];
+	endif;
+	
+	$isPostedMessage = Configure::read('Activity.postedmessage');
+	$isAddedFriend = Configure::read('Activity.addedfriend');
+	$isRquestedFriend = Configure::read('Activity.requestedfriend');
+	$isChangedProfilePhoto = Configure::read('Activity.changedprofilephoto');
+	
+	foreach($dataUserPost as $post) :
+		$isActivityAddFriend = false;
+		$acitivityTypeImage = "post";
+		$imageNotification = $this->Html->image("notification.jpg");
+		$postedPhoto = null;
+		$postedVideo = null;
+		
+		$activity = $post["UsersActivity"];
+		$profile = $post["Profile"];
+		$type = $activity["type"];
+		$like = $post["UsersLike"];
+		
+		$time = $this->Time->timeAgoInWords($activity["created"]);
+		$postedMessage = $activity["message"];
+		$commentor = $post["Commentor"];
+		$user = $post["User"];
+		$name = $user["first_name"] . " " . $user["last_name"];
+			
+		$postId = $activity["id"];
+		$countLike = count($like);
+		$username = $user["username"];
+	
+		$path = $config["photo"]["path"];
+		if(!empty($user)):
+			$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+		else:
+			$smallPhoto = $config["photo"]["smallnone"];
+		endif;
+	
+		$wrapLiked = "";
+		$iLiked = "Like";
+		if($countLike):
+			 foreach($like as $iLike) :
+				if($iLike["user_id"] == 1):
+					$iLiked = "Unlike";
+					break;
+				endif;
+			 endforeach;
+			 $href = $this->Html->link($countLike . " like this", 
+					 array("controller"=>"usersActivities", "action"=>"displayLiked?postId=$postId"), 
+					 array("class"=>"plk-$postId showLookup"));
+			 $totalLike = $this->Html->tag('b', $href);
+			 $wrapLiked = $this->Html->tag('span', "$totalLike");
+		endif;
+		
+		if($type == $isRquestedFriend):
+			$acitivityTypeImage = "changed-photo";
+		endif;
+		
+		$usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+		$profilePhoto = $this->Html->image("$smallPhoto", array('class' => 'border smallPhoto', "width"=>48, "height"=>48));
+		
+		if($profile["id"] != "" && $this->action = "whatsNew" && $activity["type"] == $isPostedMessage):
+			$fromUserName = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+			$toName = $profile["first_name"] . " " . $profile["last_name"];
+			$toUsername = $profile["username"];
+			$toProfileName = $this->Html->link($toName, "/profile/" . $toUsername, array("class"=>"strong")); 
+			$usernameLink = $fromUserName . " to " .$toProfileName;
+			
+		endif;
+		
+		/*UserID to FriendID*/
+		if($profile["id"] != "" && $this->action = "whatsNew" && $activity["type"] == $isPostedMessage):
+			$fromUserName = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+			$toName = $profile["first_name"] . " " . $profile["last_name"];
+			$toUsername = $profile["username"];
+			$toProfileName = $this->Html->link($toName, "/profile/" . $toUsername, array("class"=>"strong")); 
+			$usernameLink = $fromUserName . " to " .$toProfileName;
+		endif;
+		
+		/*UserID and FriendID*/
+		if($profile["id"] != "" && $this->action = "whatsNew" && $activity["type"] == $isAddedFriend):
+			$fromUserName = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+			$toName = $profile["first_name"] . " " . $profile["last_name"];
+			if($user["id"] == $authUserId):
+				$fromUserName = $this->Html->link("You", "/profile/" . $username, array("class"=>"strong"));
+			endif;
+			$toUsername = $profile["username"];
+			$toProfileName = $this->Html->link($toName, "/profile/" . $toUsername, array("class"=>"strong")); 
+			
+			if($profile["id"] == $authUserId):
+				$fromUserName =  $this->Html->link("You", "/profile/" . $username, array("class"=>"strong"));
+				$toProfileName = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong")); 
+				
+			endif;
+			$usernameLink = $fromUserName . " and " .$toProfileName; 
+		endif;
+		
+		if ($activity["photo"] != ""):
+			$activityPhotoPath = Configure::read("Activity.photo.path");	
+			if($activity["type"] == $isChangedProfilePhoto):
+				$activityPhotoPath = Configure::read("Album.photo.path");	
+			endif;
+			
+			$postedPhotoPath = "?w=140&r=4:3&s=" . $activityPhotoPath . $activity["photo"];	
+			$postedPhoto = $this->Html->image($postedPhotoPath, array("class"=>"activity-photo border fancybox"));
+			/*$profilePhoto = $this->Html->div("profilePhoto", $profilePhoto);*/
+		endif;
+		
+		if ($activity["video_url"] != ""):
+			$postedVideoPath = $activity["video_thumb_url"];	
+			$postedVideo = $this->Html->image($postedVideoPath, array("class"=>"activity-video border fancybox"));
+			/*$profilePhoto = $this->Html->div("profilePhoto", $profilePhoto);*/
+		endif;
+		
+		if($isActivityAddFriend):
+			$profilePhoto = $imageNotification;
+			$usernameLink  = "";
+			$postedMessage = $notificationMessage;
+		endif;
+		
+?>
+     
+         <!----------------------------------------------------------
+            posted start
+         ----------------------------------------------------------->
+         <div class="posted postedBox">
+            <div class="message">
+              <div class="left"> 
+                <?php echo $profilePhoto ?>
+              </div>
+              <div class="right marginbottom5"> 
+              <?php echo($usernameLink); ?>
+              
+              <span class="paragraph">
+			  	<?php echo $postedMessage?>
+              </span>
+              <div class="cleared">
+              	<?php echo $postedPhoto ?>
+              	<?php echo $postedVideo ?>
+              </div> 
+                <ul class="inline margintop8">
+                  <li class="nopadding"><?php echo $this->Html->image("icons/$acitivityTypeImage.png"); ?></li>
+                  <li class="ago small"><?php echo $time?></li>
+                  <li> 
+                       <a href="javascript:void(1)" 
+                       class="iLikePost" param_id="<?php echo $postId?>"><? echo $iLiked ?></a>
+                  </li>
+                  <li> <a href="javascript:void(1)" class="showComment" param_id="<?php echo $activity['id']?>">Comment</a> </li>
+                  <li> 
+                    <?php if($authUserId == $activity['user_id'] && $activityPerformAction != $type):?>
+                                <a href="#delete" class="onDeletePost showPopup" param_id="<?php echo $activity['id']?>">Delete</a> 
+                    <?php endif; ?>
+                  </li>
+                  <li class="liked"><?php echo  $wrapLiked?></li>
+                  <!--<li> <a href="javascript:void(1)">Share</a> </li>-->
+                </ul>
+              </div>
+              <?php echo $this->element("Activities/Comment", array("postId"=>$activity["id"], "commentor"=>$commentor))?>
+              
+          </div>
+       </div>
+       <!----------------------------------------------------------
+            posted end
+        ----------------------------------------------------------->
+<? endforeach; ?>
+
+<?php 
+	$implode = null;
+	if(isset($this->viewVars["Comment"])) :
+		$implode = implode(",", $this->viewVars["Comment"]);
+    endif;
+?>
+<input type="hidden" class="commentLikeIds" title="for comment like" value="<?php echo $implode?>" />
+
+
+<!----------------------------------------------------------
+    posted start ajax template
+ ----------------------------------------------------------->
+
+ <div class="posted hide postedBox clonedPostedElement">
+    <div class="message">
+      <div class="left"> 
+           <?php echo $this->Html->image($authPhoto, array('class' => 'border smallPhoto', "width"=>48, "height"=>48)); ?>
+      </div>
+      <div class="right marginbottom5">
+      <?php echo($this->Html->link($authName, "/profile/" . $authUsername, array("class"=>"username strong"))); ?>
+      
+      <span class="paragraph postedMessage"></span>
+      <div class="photoAndvideo cleared"></div> 
+        <ul class="inline margintop8">
+          <li class="nopadding"><img alt="" src="/img/icons/post.png"></li>
+          <li class="ago small dateCreated"></li>
+           <li> <a href="javascript:void(1)" class="iLikePost"  param_id="0">Like</a> 
+           		
+           </li>
+           <li> <a href="javascript:void(1)" class="showComment" param_id="0">Comment</a> </li>
+           <li> <a href="#delete" class="onDeletePost showPopup" param_id="0">Delete</a> </li>
+           <!--<li> <a href="javascript:void(1)">Share</a> </li>-->
+        </ul>
+      </div>
+       <?php echo $this->element("Activities/Comment", array("postId"=>0, "user"=>array()))?>
+  </div>
+</div>  
+<!----------------------------------------------------------
+    posted end ajax template
+----------------------------------------------------------->
+
+<!----------------------------------------------------------
+    comment start ajax template
+ ----------------------------------------------------------->  
+    <div class="reply cleared marginbottom10 hide clonedReplyElement">
+          <?php echo $this->Html->image($authPhoto, array('class' => 'border', "width"=>32, "height"=>32)); ?>
+          <div class="right content">
+            <span class="paragraph">
+           		<?php echo($this->Html->link($authName, "/profile/" . $authUsername, array("class"=>"strong"))); ?>
+            	<span class="commentMessage"></span>
+            </span>
+           
+           <ul class="clear">
+                <li class="left"><a class="date-created dateCreated"></a></li>
+                <li class="right"><a href="#delete" class="onDeleteComment showPopup" param_id="0">delete</a></li>
+               <!-- <li class="right"><a href="javascript:void(1)">like</a></li>-->
+            </ul>
+         </div>   
+    </div> 
+    
+ <script type="text/javascript">
+	$(document).ready(function() {
+	 	$(".showComment").first().trigger("click"); 
+	});
+	
+ </script>

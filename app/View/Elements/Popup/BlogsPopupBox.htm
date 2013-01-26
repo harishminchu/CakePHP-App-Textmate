@@ -1,0 +1,26 @@
+<?php 
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$action = $this->action;
+?>	
+
+<div class="hide"> 
+   <?php if($action == "viewEntry") : ?>
+        <div id="deleteBlogComment" class="popup-box deleteBlogComment popupBox">
+            <div class="head">Delete</div>
+            <div class="note"></div>
+            <div class="content">Are you sure you want to delete this <span class="messageSubject">comment</span>?</div>
+            <div class="buttons"> 
+                 <?php echo $this->Form->create('Popup', 
+                                    array("class"=>"deleteCommentForm", 
+                                    'url'=>array("action"=>"deleteComment","controller"=>"Blogs")));?>
+                     <input type="hidden" name="data[type_id]"  class="typeId" />
+                     <input type="hidden" name="data[param_id]"  class="paramId" />
+                    <button type="button" class="button setLoader buttonYesDeleteComment">Yes</button>	or 
+                    <a href="javascript:void(1)" class="onCancel">Cancel</a>
+                    <span class="ajaxTarget hide"></span>
+                <?php echo $this->Form->end(); ?>    
+            </div>	
+        </div> 
+	<?php endif; ?>   
+          
+</div>

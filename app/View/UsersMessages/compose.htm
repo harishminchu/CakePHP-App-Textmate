@@ -1,0 +1,91 @@
+<?php
+	$config = Configure::read("User");
+?>  
+   <!----------------------------------------------------------
+    	box post start
+    ----------------------------------------------------------->
+    <div class="notifyMessage">
+          <div class="notification success" 
+                    mistake ="Please select recepient and input your message." 
+                    success="Your message has been successfully sent.">
+                   
+          </div>
+    </div>
+      
+    <div class="box post boxOnPost">
+      
+	  <?php echo $this->Form->create('UsersMessage', array("class"=>"messageForm", "action"=>"addMessage"));?>
+          <textarea class="textarea gray inputSearch autoGrow" >Search your friend name here...</textarea>
+       	  <div class="textarea-bottom"></div>
+          <div class="list-friends listFriends"></div>
+          <div class="margintop8 showHide cleared search-friends hide">
+           
+             	<?php foreach($dataUserFriends as $records) : 
+						$friend = $records["Friend"];
+						$name = $friend["first_name"] . " " . $friend["last_name"];
+						$path = $config["photo"]["path"];
+						if(!empty($friend)):
+							$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $friend["photo"];		
+						else:
+							$smallPhoto = $config["photo"]["smallnone"];
+						endif;
+						$profilePhoto = $this->Html->image("$smallPhoto", array('class' => 'border', "width"=>18, "height"=>18));
+				?>
+                        <div class="friends">
+                            <input type="checkbox" params="<?php echo $name?>" class="sendTo" name="data[friend][]" 
+                            value="<?php echo $friend["id"]?>" />
+                            <?php echo $profilePhoto ?>
+                            <a class="strong"><?php echo $name?></a> 
+                        </div> 
+                          
+                <?php endforeach; ?>
+          </div>
+          <div>
+          	 <strong>Your Message:</strong>
+             <textarea class="textarea input-message inputPost alreadyGrow" name="data[message]" ></textarea>
+          	 <input type="hidden" name="data[photo]" class="sourceImage"/> 
+        	<div class="textarea-bottom"></div>
+   			
+             <div class="margintop10">
+                  <button type="submit" class="button setLoader">Send</button>	
+                  <span class="post-menu">
+                  <?php echo $this->Html->image("icons/photo.png", array("class"=>"vmiddle")); ?> 
+                  <a href="javascript:void(1)" class="onAddPhoto">Attach Photo</a>
+                  </span> 
+              </div>
+          </div>
+          <span class="ajaxTarget hide"></span>
+     <?php echo $this->Form->end(); ?>
+     	
+        <div class="margintop10 hide addPhoto ">
+     	  <div class="hr"></div>
+		  <?php echo $this->Form->create('Users', array("class"=>"uploadForm", "action"=>"addPhoto"));?>      
+              <div class="notification mistake" 
+  						mistake ="" 
+  						success="">
+  			  </div>
+                    
+              <input type="hidden" name="data[actionType]" class="actionType" value="upload"/>
+              <input type="hidden" name="data[param_id]" class="paramId" value="0"/>
+              <input type="hidden" name="data[uploadDestination]" class="uploadDestination" value="messages"/>
+              <input type="hidden" name="data[sourceImage]" class="sourceImage"/> 
+                   
+              <div class="marginbottom5 file-bg-small fileUploadContainer">
+                <input name="data[photo]" type="file" class="file-upload fileUpload"  />
+              </div>
+            
+              <span class="ajaxTarget hide"></span>
+              <?php echo $this->Html->image(array(), array('class' => ' hide bordered-gray target-photo targetPhoto', 
+			  							   "width"=>100,"height"=>100)); ?>
+                <span class="loader hide"><i class="setLoader"></i> Uploading...</span>                             
+              <a href="javascript:void(1)" class="small block onCancelPhoto">Cancel</a>
+          <?php echo $this->Form->end(); ?>
+                      
+      </div>  
+        
+        	         
+    </div>
+    <!----------------------------------------------------------
+    	box post end
+    ----------------------------------------------------------->
+ 

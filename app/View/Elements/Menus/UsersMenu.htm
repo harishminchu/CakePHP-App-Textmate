@@ -1,0 +1,35 @@
+<?php
+	$action = $this->action;
+	$selected["basicInformation"] = "";
+	$selected["contactInformation"] = "";
+	$selected["location"] = "";
+	$selected["profilePhoto"] = "";
+	$selected["account"] = "";
+	
+	$selected[$action] = "strong";
+?>
+
+<div class="box left-menu"> 
+   <ul class="bordered">
+        <li><?php echo $this->Html->image("icons/basic.png"); ?> 
+            <?php echo $this->Html->link("Basic Information",array("controller"=>"members", 
+                                         "action"=>"basic-information"), array("class"=>$selected["basicInformation"])); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/email.png"); ?> 
+            <?php echo $this->Html->link("Contact Information",array("controller"=>"members", 
+                                        "action"=>"contact-information"), array("class"=>$selected["contactInformation"])); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/photo.png"); ?> 
+            <?php echo $this->Html->link("Profile Photo",array("controller"=>"members", 
+                                         "action"=>"profile-photo"), array("class"=>$selected["profilePhoto"])); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/marker.png"); ?> 
+            <?php echo $this->Html->link("Location",array("controller"=>"members", "action"=>"location"),
+                                          array("class"=>$selected["location"])); ?>
+        </li>
+        <li class="noborder"><?php echo $this->Html->image("icons/account.png"); ?> 
+            <?php echo $this->Html->link("Account",array("controller"=>"members", "action"=>"account"),
+                                        array("class"=>$selected["account"])); ?>
+        </li>
+   </ul>
+</div>

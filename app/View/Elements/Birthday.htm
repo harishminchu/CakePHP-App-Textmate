@@ -1,0 +1,24 @@
+<?php
+	$varYear = "";
+	$varMonth = "";
+	$varDay = "";
+	
+	$dataDate = $dataUserDetail["User"]["birthdate"];
+	$explode = explode("-", $dataDate);
+	if(isset($explode[1])) {
+		$varYear = $explode[0];
+		$varMonth = $explode[1];
+		$varDay = $explode[2];
+	}
+
+?>
+<label class="dateSelect">
+<?php
+	echo $this->Form->month("", array("class"=>"m select selectMonth",'selected'=>$varMonth));						
+	echo $this->Form->day('', array("class"=>"d select selectDay",'value'=>$varDay));;
+	echo $this->Form->year('any', 1950, date('Y'), array("class"=>"y select selectYear", "value"=>$varYear), false);						
+?>
+</label>
+
+
+

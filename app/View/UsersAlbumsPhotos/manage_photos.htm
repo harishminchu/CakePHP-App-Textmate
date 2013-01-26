@@ -1,0 +1,59 @@
+<?php
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$config = Configure::read("Album");
+?>
+<?php echo $this->Form->create('UsersAlbumsPhoto', array("class"=>"saveDetailsForm", "action"=>"saveMultipleDetails", "id"=>mt_rand(1,12345678)));?>
+<?php foreach($dataAlbumsPhoto as $record) :
+		$checked = "";
+		$usersPhoto = $record["UsersAlbumsPhoto"];
+		$photo = $usersPhoto["photo"];
+		$photo = "?w=130&r=4:5&s=" . $config["photo"]["path"] . $photo;
+		$photoId = $usersPhoto["id"];
+		$albumId = $usersPhoto["album_id"];
+		$albumCover =  $usersPhoto["album_cover"];
+		if($albumCover ){
+			$checked = "checked='checked'";
+	    }		 
+?>
+    <div class="cover photoContainer"> 
+        	<input type="hidden" name="data[default_album_id]"  class="defaultAlbumId"  value="<?php echo $albumId?>"/>
+            <input type="hidden" name="data[id][]" class="photoId" value="<?php echo $photoId?>"/>
+            <ul class="compact cleared">
+                <li class="image"> <?php echo $this->Html->image($photo, array("class"=>"photoHolder border")); ?> </li>
+                <li>
+                  <span>Move To Album</span>
+                  <?php 
+                       $values = $dataAlbums;
+                       echo $this->Form->input(null, 
+                       array_merge(array('options' => $values,"class"=>"select albumIdHolder","selected"=>$usersPhoto["album_id"],
+					   "name"=>"album_id[]"),$noInputOptions));
+                  ?>
+                </li>
+                <li>
+                  <span>Title</span>
+                  <input type="text" class="text titleHolder" name="data[title][]" value="<?php echo  $usersPhoto["title"]?>">
+                </li>
+                <li>
+                  <span>Caption</span>
+                  <textarea type="text"  class="textarea descHolder" name="data[caption][]"><?php echo  $usersPhoto["caption"]?></textarea>
+                </li>
+                <li class="options"> 
+                    <input name="delete[]" type="checkbox" value="<?php echo $photoId?>" class="deletePhoto" /> Delete Photo
+                    <input name="cover" type="radio" value="<?php echo $photoId?>" class="albumCover" <?php echo $checked?> /> Album Cover
+               </li>
+          </ul>
+    </div>
+<?php endforeach;?>
+ 
+      <div class="notification success" 
+            mistake ="" 
+            success="">
+            Changes has been saved.
+      </div>
+
+     <button type="submit" class="button setLoader commentButton">Save Changes</button> or 
+     <?php echo $this->Html->link("Back to My Albums",array("controller"=>"my-albums", "action"=>"")); ?>
+     <a href="#delete" class="triggerDelete showPopup"></a>
+  
+  <span class="hide ajaxTarget"></span> 
+<?php echo $this->Form->end(); ?>

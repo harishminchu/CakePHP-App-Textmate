@@ -1,0 +1,55 @@
+<?php
+	$this->loadHelper("Time");
+	$config = Configure::read("User"); 
+	$authUserId = $this->Session->read('Auth.User.id');  
+?>
+<ul class="blocked widest">
+    <?php foreach($dataNotification as $record) :
+            $notification = $record["Notification"];
+            $user = $record["User"]; 
+            $profile = $record["Profile"]; 
+            $userName = $user["first_name"] . " " . $user["last_name"];
+            $username = $user["username"];
+            $profileName = $profile["first_name"] . " " . $profile["last_name"];
+            $profileUsername = $profile["username"];
+            
+            $profileLink = $this->Html->link($profileName, array("controller"=>"profile", "action"=>$profileUsername));
+            $userLink = $this->Html->link($userName, array("controller"=>"profile", "action"=>$username));
+            $isYou = false;
+            
+            $timeAgo = $this->Time->timeAgoInWords($notification["created"]);
+            
+            if($user["id"] == $authUserId):
+                $isYou = true;
+            endif;
+            
+            switch($notification["type"]):
+                
+                case 2:
+                    $icon = "requested.png";
+                    if($isYou):
+                        $notify = "You and " . $profileLink . " " . $notification["message"];
+                    else:
+                        $notify = $userLink . " and " . $profileLink . " " . $notification["message"];
+                    endif;
+                    break;
+                case 3:
+                    $icon = "added.png";
+                    if($isYou):
+                        $notify = "You have requested $profileLink to be your friend"; 
+                    else:
+                        $notify = $userLink .  " " . $notification["message"];
+                    endif;	
+                    break;
+                case 4:
+                    $icon = "changed.png";
+					$notify = "You've changed your profile photo. ";
+                    break;	
+            endswitch;
+            $spanTime = $this->Html->tag("span", "  " . $timeAgo, array("class"=>"small"));
+            $icon = $this->Html->image("icons/$icon");
+			
+            echo $this->Html->tag("li", "$icon $spanTime $notify");
+    ?>
+    <?php endforeach;?>
+</ul>

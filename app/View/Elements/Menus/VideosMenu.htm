@@ -1,0 +1,41 @@
+<?php
+	$action = $this->action;
+	$myVideos = array("manageVideos","editVideo", "editSettings");
+	$browse = array("playVideo");
+	if(in_array($action, $myVideos)):
+		$action = "myVideos";
+	endif;
+	if(in_array($action, $browse)):
+		$action = "browse";
+	endif;
+	$selected["browse"] = "";
+	$selected["myVideos"] = "";
+	$selected["addCategory"] = "";
+	$selected["search"] = "";
+	$selected["categoryAdd"] = "";
+	
+	$selected[$action] = "strong";
+?>
+<!----------------------------------------------------------
+   	box left-menu
+----------------------------------------------------------->
+<div class="box left-menu"> 
+   <ul class="bordered">
+        <li><?php echo $this->Html->image("icons/browse.png"); ?> 
+            <?php echo $this->Html->link("Browse Videos",array("controller"=>"videos", "action"=>"browse")
+										 ,array("class"=>$selected["browse"])); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/video.png"); ?> 
+            <?php echo $this->Html->link("My Videos",array("controller"=>"videos", "action"=>"my-videos")
+										,array("class"=>$selected["myVideos"])); ?>
+        </li>
+        <li><?php echo $this->Html->image("icons/add.png"); ?> 
+             <?php echo $this->Html->link("Add Video Category",array("controller"=>"videos", "action"=>"category-add")
+										,array("class"=>$selected["categoryAdd"])); ?>
+        </li>
+        <li class="noborder"><?php echo $this->Html->image("icons/search.png"); ?> 
+            <?php echo $this->Html->link("Search Videos",array("controller"=>"videos", "action"=>"search")
+									    ,array("class"=>$selected["search"])); ?>
+        </li>
+   </ul>
+</div>

@@ -1,0 +1,78 @@
+<?php  /* Ajax */ ?>
+	
+    <div class="subject"><h3>My Friends</h3></div>
+    <ul class="blocked loadedFriends">
+        <?php 
+            $config = Configure::read("User");
+            
+            foreach($datashowFriends as $record) : 
+                $user = $record["User"];
+                $friend = $record["Friend"];
+                $friendCount = count($friend);
+                $username = $friend["username"]; 
+                $name = $friend["first_name"] . " " . $friend["last_name"];	
+                if(!empty($friend["photo"])):
+                    $smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $friend["photo"];		
+                else:
+                    $smallPhoto = $config["photo"]["smallnone"];
+                endif;
+                $usenameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+        ?>
+            <li class="cleared userFriends">
+                <div class="left">
+                    <?php echo $this->Html->image($smallPhoto, array('class' => 'inleft', "width"=>48, "height"=>48)); ?>
+                    <label>
+                        <?php echo $usenameLink ?>
+                        <span class="count">
+                            <?php //echo $friendCount?>
+                        </span> 
+                    </label>
+                    
+                </div>
+            </li>
+        <?php endforeach; ?>  
+    </ul>
+
+
+
+
+<?php $config = Configure::read("Album"); ?>
+    <ul class="inlined cleared loadedAbums">
+    <?php foreach($dataShowAlbums as $record) :
+            $album = $record["UsersAlbum"];
+            $albumName = $album["album_name"];
+            $albumId = $album["id"];
+            
+            $usersPhoto = $record["UsersAlbumsPhoto"];
+            $countPhotos = count($usersPhoto);
+            foreach($usersPhoto as $photo):
+                $photoCover = $photo["photo"];
+                if($photo["album_cover"] == 1 ):
+                    $photoCover = $photo["photo"];
+                    break;	
+                endif;
+            endforeach;
+            if($countPhotos):
+                $photoCover = "?w=120&r=4:3&s=" . $config["photo"]["path"] . $photoCover;
+    ?> 
+                   <li class="image"> 
+                        <div>
+							<a href="javascript:void(1)" class="showAlbumPhotos" param_id="<?php echo $albumId ?>" title="<?php echo $albumName?>">
+								<?php echo $this->Html->image($photoCover, array("class"=>"border","title"=>$albumName)); ?>
+                            </a>    
+                        </div>
+                       <span>
+                           <a href="javascript:void(1)" class="showAlbumPhotos setLoader" param_id="<?php echo $albumId ?>">
+                           <?php echo $albumName?></a>
+                       </span>
+                       <span class="counter"><?php echo $countPhotos?> Photos</span>
+                    </li>      
+                   
+    <?php 
+            endif;
+        endforeach;
+    ?>
+     </ul>
+     
+
+

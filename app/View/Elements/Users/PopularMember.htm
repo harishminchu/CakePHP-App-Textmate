@@ -1,0 +1,28 @@
+<?php $config = Configure::read("User"); ?>
+
+<ul class="box itemized cleared">
+		<?php foreach($dataPopularUser as $popular) : 
+              	$user = $popular["User"];
+                $friendCount = count($popular["UsersFriend"]);
+                $username = $user["username"]; 
+                $name = $user["first_name"] . " " . $user["last_name"];	
+                if(!empty($user["photo"])):
+                    $smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+                else:
+                    $smallPhoto = $config["photo"]["smallnone"];
+                endif;
+				$usenameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+    	?>
+        <li>
+			<?php echo $this->Html->image($smallPhoto, array("width"=>48, "height"=>48)); ?>
+            <label>
+                <?php echo $usenameLink ?>
+            </label>
+            <label class="small">
+                - friends
+            </label> 
+            
+        </li>
+  	<?php endforeach; ?>  
+
+</ul>

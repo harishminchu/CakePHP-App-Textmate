@@ -1,0 +1,17 @@
+<?php
+	$config = Configure::read("User");
+	$user = $dataUserDetail["User"];
+	if(!empty($user)):
+		$bigPhoto = "?w=172&h=174&s=" . $config["photo"]["path"] . $user["photo"];	
+	else:
+		$bigPhoto = $config["photo"]["bignone"];
+	endif;
+	
+?>
+
+<!----------------------------------------------------------
+   	box profile-photo
+----------------------------------------------------------->
+<div class="box profile-photo"> 
+    <?php echo $this->Html->image($bigPhoto, array('class' => '', "width"=>172, "height"=>174)); ?>
+</div>

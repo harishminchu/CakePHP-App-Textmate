@@ -1,0 +1,45 @@
+    <!----------------------------------------------------------
+    	message post start
+    ----------------------------------------------------------->
+    <div class="box post boxOnPost margintop10">
+
+		<?php echo $this->Form->create('UsersMessage', array("class"=>"messageForm", "action"=>"addReply"));?>
+            <textarea class="textarea gray inputPost autoGrow" name="data[message]">Reply...</textarea>
+            <input type="hidden" name="data[photo]" class="sourceImage"/>
+            <div class="textarea-bottom"></div>
+            <div class="margintop8 showHide hide">
+              <button type="submit" class="button setLoader">Reply</button>
+              <span class="post-menu"> 
+                <?php echo $this->Html->image("icons/photo.png", array("class"=>"vmiddle")); ?> 
+                <a href="javascript:void(1)" class="onAddPhoto">Attach Photo</a> 
+              </span> 
+            </div>
+            <span class="ajaxTarget hide"></span> 
+        <?php echo $this->Form->end(); ?>
+     		
+     	<div class="margintop10 hide addPhoto ">
+          <div class="hr"></div>
+          <?php echo $this->Form->create('Users', array("class"=>"uploadForm", "action"=>"addPhoto"));?>
+              <div class="notification mistake" mistake ="" success=""> </div>
+              
+              <input type="hidden" name="data[actionType]" class="actionType" value="upload"/>
+              <input type="hidden" name="data[param_id]" class="paramId" value="0"/>
+              <input type="hidden" name="data[uploadDestination]" class="uploadDestination" value="messages"/>
+              <input type="hidden" name="data[sourceImage]" class="sourceImage"/>
+              <div class="marginbottom5 file-bg-small fileUploadContainer">
+                <input name="data[photo]" type="file" class="file-upload fileUpload"  />
+              </div>
+              <span class="ajaxTarget hide"></span> 
+              <?php echo $this->Html->image(array(), array('class' => ' hide bordered-gray target-photo targetPhoto', 
+                                                       "width"=>100,"height"=>100)); ?> 
+              <span class="loader hide"><i class="setLoader"></i> Uploading...</span> 
+              <a href="javascript:void(1)" class="small block onCancelPhoto">Cancel</a> 
+          <?php echo $this->Form->end(); ?> 
+        </div>
+
+              
+    </div>
+    <!----------------------------------------------------------
+    	message post end
+    ----------------------------------------------------------->
+    

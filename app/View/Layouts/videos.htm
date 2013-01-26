@@ -1,0 +1,117 @@
+<?php
+	/* Layout */
+	$action = $this->action;
+	$additionalCss = array();
+	$popupBox = "";
+	$usesTinyMCE = array("editVideo");
+	
+	switch($action):
+		case "search":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Videos.Youtube.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', "jquery.fancybox",'app', 'ajax', "videos");
+			$options = array();	
+			$additionalCss = array("jquery.fancybox");
+			$popupBox = "VideosPopupBox";
+			$subject = "Search";
+	        break;
+		case "myVideos":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()","Videos.MyVideos.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox','app', 'ajax', "videos");
+			$options = array();	
+			$additionalCss = array("jquery.fancybox");
+			$popupBox = "VideosPopupBox";
+			$subject = "My Videos";
+			break;	
+		case "manageVideos":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()","Videos.ManageVideos.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox','app', 'ajax', "videos");
+			$options = array();	
+			$additionalCss = array("jquery.fancybox");
+			$popupBox = "VideosPopupBox";
+			if(!isset($subject)):
+				$subject = "Manage Videos";
+	        endif;
+			break;	
+		case "browse":	
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Videos.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', "jquery.fancybox",'app', 'ajax', "videos");
+			$options = array();	
+			$additionalCss = array("jquery.fancybox");
+			$popupBox = "VideosPopupBox";
+			if(!isset($subject)):
+				$subject = "Browse Videos";
+	        endif;
+	        break;
+		case "categoryAdd":	
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Videos.CategoryAdd.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', "jquery.fancybox",'app', 'ajax', "videos");
+			$options = array();	
+			$additionalCss = array("jquery.fancybox");
+			$popupBox = "VideosPopupBox";
+			$subject = "addCategory";
+	        break;
+		case "editVideo":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()","Videos.Edit.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.poshytip','app', 'ajax', 'tinymce', "videos");
+			$options['validate'] = array("formclass"=>"editVideoForm", "model"=>"UsersVideo");
+			$additionalCss = array("jquery.poshytip");
+			$subject = "Edit Video";
+	        break;	
+		case "playVideo":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()","Videos.PlayVideo.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox',
+								'jquery.autogrow', 'app', 'ajax', "comments", "videos");
+			$options  = array();
+			$popupBox = "VideosPopupBox";
+			$additionalCss = array("jquery.fancybox");
+			$subject = "Play Video";
+	        break;			
+		case "editSettings":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.poshytip','app', 'ajax', "videos");
+			$options['validate'] = array("formclass"=>"editVideoSettingsForm", "model"=>"UsersVideosCategory");
+			$additionalCss = array("jquery.poshytip");
+			$subject = "Edit Settings";
+	        break;									
+	endswitch;
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo $this->Html->charset(); ?>
+<title><?php echo __('Textmate'); ?> <?php echo $title_for_layout; ?></title>
+<?php if(in_array($action, $usesTinyMCE)):?>
+	<script type="text/javascript" src="/js/tiny_mce/tiny_mce.js"></script>
+<?php endif; ?>
+
+<?php
+	echo $this->Html->meta('icon');
+	echo $this->Html->css( array_merge(array('style', 'videos'), $additionalCss));
+	echo $this->Jquery->link($javaScript, $scriptBlock, $options);
+?>
+</head>
+<body>
+
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+
+<div class="page videos">
+	<div class="subject"><h3>Videos - <?php echo $subject?></h3></div>
+    <div class="left"> <?php echo $this->element("Menus/VideosMenu");?>  </div>
+    <div class="middle">  
+		<?php echo $content_for_layout; ?>
+    </div>    
+</div>
+<?php 
+	if($popupBox) :
+		echo $this->element("Popup/$popupBox");
+	endif;	
+?> 
+
+<?php echo $this->element("Footer") ?>
+<div class="script"></div>
+
+</body>
+</html>

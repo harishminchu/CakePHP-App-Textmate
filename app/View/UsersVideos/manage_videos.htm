@@ -1,0 +1,51 @@
+<h3 class="marginbottom10"><?php echo $dataMyVideos[0]["UsersVideosCategory"]["category_name"];?></h3>
+<div class="videoContainer">
+    <ul class="lists manage-videos">
+    	<?php 
+			$config = Configure::read("Video");
+			$this->loadHelper("Time");
+										 
+			foreach($dataMyVideos as $records):
+				$video = $records["UsersVideo"];
+				$category = $records["UsersVideosCategory"];
+				$thumb = $video["thumb_url"];
+				$id = $video["id"]; 
+				$title = $video["title"];
+				$length = strlen($title);
+				
+				if($length >= 40):
+					$title = substr($title, 0, 40) . "..."; 	
+				endif;
+				
+				$description = $video["description"];
+				$categoryName = $category["category_name"];
+				$time = $this->Time->timeAgoInWords($video["created"]);
+				
+				$smallPhoto = $video["photo"];	
+				if(!empty($smallPhoto)):
+					$smallPhoto = "?w=177&h=132&s=" . $config["photo"]["path"] . $smallPhoto;
+				else:
+					$smallPhoto = $video["thumb_url"];	
+				endif;
+				
+		?>
+                <li class="<?php echo $id?>">
+                   <a class="video showLookup"  href="<?php echo $video["url"]?>">
+				   <?php echo $this->Html->image("$smallPhoto", array("height"=>102, "width"=>136, "class"=>"")); ?> 
+                   </a>
+                    <span class="title"><?php echo $title ?></span>
+                    <span class="category"><?php echo $categoryName?></span>
+                    <span class="small"><?php echo $time?></span>
+                    <span class="options">
+						  <?php echo $this->Html->image("icons/edit.png"); ?> 
+						  <?php echo $this->Html->link("Edit",array("controller"=>"videos", "action"=>"edit/$id")); ?>
+                          <?php echo $this->Html->image("icons/delete.png"); ?> 
+                          <a href="#delete" class="showPopup" param_id="<?php echo $id?>">Delete</a> 
+                    </span>
+                </li>
+         <?php endforeach; ?>       
+    </ul>
+    <div class="clear">
+    	<?php echo $this->Html->link("Back To My Videos",array("controller"=>"videos", "action"=>"my-videos")); ?> 
+    </div>
+</div>

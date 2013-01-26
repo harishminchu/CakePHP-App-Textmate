@@ -1,0 +1,68 @@
+small, .small, .gray { color:#999999;}
+.messages .middle { width:523px; margin-left:50px}
+.messages div.right .strong  { font-size:11px;}
+.messages .friends { font-size:11px; width:150px; float:left; font-weight:normal}
+.messages .friends input { width: auto}
+.attach { font-size:11px; color:#999999}
+.back { font-size:11px;}
+.left { width:195px; margin-right:0 5px 0 0; padding:5px;}
+.right { width:195px; padding:5px; font-size:11px;}
+.textarea { border:0;}
+
+.posted { font-size:10pt}
+.posted span.paragraph { line-height:15px; font-size:11px;}
+.posted .comment p, .posted .comment ul { padding:5px 0 5px 0; width:338px}
+.posted .comment .reply { padding-bottom:2px;}
+.posted .comment ul { color:#999999}
+.message { border-bottom:1px solid #EAEAEA; padding:0 0 0px 0; margin:0 0 0 0;  color:#555555; }
+.message div.left { width:50px}
+.message div.left img { margin:3px 0 0 0}
+.message div.right { width:456px; line-height:14px; margin-bottom:5px; padding-left:0;}
+.message ul.inline { display:block}
+.message ul li { padding:5px 0 0 0; line-height:15px}
+.message ul.inline li { padding:0 10px 0 0} 
+.message ul li.ago { font-size:11px; color:#999999}
+.message ul li.nopadding { padding:0}
+.message ul li a { font-size:0.8em; padding:0 5px 0 0}
+.message ul li span.wrap { font-style:normal; font-size:11px; color:#999999;}
+.message ul li span b {  font-weight:normal; font-size:11px;}
+.message ul li.ago { width:130px}
+.message ul li.right { width:120px; text-align:right} 
+.message .comment div.content{ width:348px}
+.message .comment ul li.left { padding:0;}
+.message .total { font-size:10px; color:#999999}
+.message .liked { width:60px; float:right; text-align:right; margin-right:10px;}
+.message .liked a.nohover { font-size:0.7em}
+.message a:hover { text-decoration:underline}
+.message ul li a.nohover:hover{ text-decoration:none;}
+.message .activity-photo { margin:5px 5px 10px 0 ; display:block}
+.deleted .message div.right .strong { color:#990000}
+.search-friends { padding:3px 0 8px 0;}
+
+/* margins */
+.margin5{ margin:5px;}
+.margintop3{ margin-top:3px;}
+.margintop5{ margin-top:5px;}
+.margintop8{ margin-top:8px;}
+.margintop20{ margin-top:20px;}
+.margintop10{ margin-top:10px;}
+.marginleft5{ margin-left:5px;}
+.marginright5{ margin-right:5px;}
+.marginbottom10{ margin-bottom:10px;}
+.marginbottom5{ margin-bottom:5px;}
+.marginnone { margin:0;}
+
+/* box post    */
+.box.post { margin:10px 0 0 0}
+.box.post .textarea{ width:500px; height:16px; background:url(../img/post-textarea.png) no-repeat; resize: none; padding:5px}
+.box.post .textarea.input-message { height:150px}
+.box.post .textarea-bottom {background:url(../img/post-textarea-bottom.png) no-repeat; height:2px;width:510px;}
+.box.post .button { margin-right:10px}
+.box.post .post-menu a { font-weight:bold; padding-right:10px; font-size:11px}
+/* box comment */
+.box.comment { width:auto; margin:10px 58px; background-color:#FCFCFC}
+.box.comment .textarea{ width:376px; height:16px; padding:5px;background:url(../img/comment-textarea.png) no-repeat;resize: none;}
+.box.comment .textarea-bottom {background:url(../img/comment-textarea-bottom.png) no-repeat; height:2px;width:386px;}
+.list-friends { font-size:11px; padding:5px 0 5px 0}
+.friends a { color:#336699}
+.unread { background:#EDF1F6}

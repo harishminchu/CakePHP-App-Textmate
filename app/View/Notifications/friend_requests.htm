@@ -1,0 +1,59 @@
+<?php
+	$this->loadHelper("Time");
+	$config = Configure::read("User"); 
+	
+?>
+
+<ul class="blocked bordered">
+	<?php 
+        $i = 1;
+		foreach($dataFriendRequests as $member) : 
+            $classFirst = "";
+			$user = $member["User"];
+            $usersFriend = $member["UsersFriend"];
+            $name = $user["first_name"] . " " . $user["last_name"]; 	
+                        
+            if(!empty($user["photo"])):
+                $smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+            else:
+                $smallPhoto = $config["photo"]["smallnone"];
+            endif;
+			
+			if($i == 1):
+				$classFirst = "first";
+			endif;
+			$i++;
+        ?>
+        <li class="cleared <?php echo $classFirst?> <?php echo $usersFriend["user_id"]?>">
+			<div class="left">
+				
+				<?php echo $this->Html->image($smallPhoto, array('class' => 'left', "width"=>48, "height"=>48)); ?>
+                <label>
+                	<a href=""><?php echo $name?></a>
+                     <span class="count">
+                   		 <?php echo count($usersFriend)?> friends
+               		 </span>
+                </label>
+                
+            </div>
+            <div class="right options">
+				<?php echo $this->Html->image("icons/confirm.png"); ?>
+                <a href="javascript:void(1)" class="onConfirmRequest setLoader" param_id="<?php echo $usersFriend["user_id"]?>">
+                    Confirm
+                </a>
+                
+                <?php echo $this->Html->image("icons/ignore.png"); ?>
+                <a href="#ignore" class="popupbox showPopup onCancelFriend" 
+                    param_id="<?php echo $usersFriend["user_id"]?>"
+                    content="Are you sure to ignore the request?" 
+                    head="Ignore Request" 
+                    type="2">
+                    Ignore Request
+                </a>
+                                
+        	</div> 
+        </li> 
+        
+    <?php endforeach; ?>
+
+</ul>  

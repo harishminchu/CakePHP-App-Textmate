@@ -1,0 +1,60 @@
+ <!----------------------------------------------------------
+    	box post start
+    ----------------------------------------------------------->
+    <div class="box post cleared boxOnPost">
+      <?php echo $this->Form->create('UsersActivity', array("class"=>"postForm", "action"=>"addPost"));?>
+          <textarea class="textarea gray inputPost autoGrow" name="data[message]">What is your story...</textarea>
+          <input type="hidden" name="data[photo]" class="sourceImage"/> 
+          <input type="hidden" name="data[video]" class="sourceVideo"/> 
+          <?php
+		  	if($this->action = "publicProfile" &&  $this->Session->read('Auth.User.id') != $dataUserDetail["User"]["id"]):
+				$user = $dataUserDetail["User"];
+				echo $this->Form->hidden(null, array("name"=>"data[friend_id]","value"=>$user["id"]));
+			endif
+		  ?>
+          <div class="textarea-bottom"></div>
+          
+          <div class="margintop8 showHide hide">
+              <button type="submit" class="button setLoader">Share</button>	
+              <span class="post-menu">
+			  <?php echo $this->Html->image("icons/photo.png", array("class"=>"vmiddle")); ?> 
+              <a href="javascript:void(1)" class="onAddPhoto">Add Photo</a>
+              <?php echo $this->Html->image("icons/film.png", array("class"=>"vmiddle")); ?> 
+              <a href="#addVideo" class="onAddVideo showPopup">Add Video</a>
+              </span>    
+          </div>
+          <span class="ajaxTarget hide"></span>
+     <?php echo $this->Form->end(); ?>	
+      <div class="margintop10 hide add-photo addPhoto ">
+     	  <div class="hr"></div>
+		  <?php echo $this->Form->create('Users', array("class"=>"uploadForm", "action"=>"addPhoto"));?>      
+              <div class="notification mistake" 
+  						mistake ="" 
+  						success="">
+  			  </div>
+                    
+              <input type="hidden" name="data[actionType]" class="actionType" value="upload"/>
+              <input type="hidden" name="data[param_id]" class="paramId" value="0"/>
+              <input type="hidden" name="data[uploadDestination]" class="uploadDestination" value="activities"/>
+              <input type="hidden" name="data[sourceImage]" class="sourceImage"/> 
+                   
+              <div class="marginbottom5 file-bg-small fileUploadContainer">
+                <input name="data[photo]" type="file" class="file-upload fileUpload"  />
+              </div>
+            
+              <span class="ajaxTarget hide"></span>
+              <?php echo $this->Html->image(array(), array('class' => ' hide bordered-gray target-photo targetPhoto')); ?>
+                <span class="loader hide"><i class="setLoader"></i> Uploading...</span>                             
+              <a href="javascript:void(1)" class="small block onCancelPhoto">Remove Photo</a>
+          <?php echo $this->Form->end(); ?>           
+      </div> 
+      
+      <div class="hide margintop8 add-video addVideoContainer">
+      		<div class="imageContainer"></div>
+			<a href="javascript:void(1)" class="removeVideo">Remove Video</a>
+      </div> 
+              
+    </div>
+    <!----------------------------------------------------------
+    	box post end
+    ----------------------------------------------------------->

@@ -1,0 +1,55 @@
+<?php
+	/* Layout */
+	$action = $this->action;
+	$additionalCss = array();
+	$popupBox = "";
+	switch($action):
+		case "recentUpdates":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()");
+			$javaScript = array('jquery.core', 'jquery.form','app', 'ajax');
+			$options = array();
+			$additionalCss = array("notifications");
+			$subject = "Notifications - Recent Updates";
+	        break;
+		case "friendRequests":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Notifications.FriendRequests.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox',"jquery.poshytip", 'app', 'ajax', "notifications");
+			$options = array();
+			$popupBox = "NotificationsPopupBox";
+			$additionalCss = array("jquery.fancybox", "jquery.poshytip", "notifications");
+			$subject = "Notifications - Friend Requests";
+	        break;					
+	endswitch;
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo $this->Html->charset(); ?>
+<title><?php echo __('Textmate'); ?> <?php echo $title_for_layout; ?></title>
+<?php
+	echo $this->Html->meta('icon');
+	echo $this->Html->css( array_merge(array('style'), $additionalCss));
+	echo $this->Jquery->link($javaScript, $scriptBlock, $options);
+?>
+</head>
+<body>
+
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+
+<div class="page notifications">
+	<div class="subject"><h3><?php echo $subject?></h3></div>
+    <div class="left"> <?php echo $this->element("Menus/NotificationMenu");?>  </div>
+    <div class="middle">  
+		<?php echo $content_for_layout; ?>
+    </div>    
+</div>
+<?php 
+	if($popupBox) :
+		echo $this->element("Popup/$popupBox");
+	endif;	
+?> 
+<?php echo $this->element("Footer") ?>
+</body>
+</html>

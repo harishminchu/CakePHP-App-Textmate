@@ -1,0 +1,65 @@
+<?php
+	/* $postId? - is pass in here */
+	$config = Configure::read("User");
+	$userDetail = $dataUserDetail["User"];
+	$authUserId = $this->Session->read('Auth.User.id');
+?>   
+   <!----------------------------------------------------------
+    	box comment start
+    ----------------------------------------------------------->
+    <div class="box comment commentBox hide">
+     <?php
+       
+	   if(isset($commentor)):
+	   		foreach($commentor as $userPostsComment):
+				$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $userPostsComment["photo"];	
+				$username = $userPostsComment["username"];
+				$name = $userPostsComment["first_name"] . " " . $userPostsComment["last_name"];
+				$comment = $userPostsComment["UsersActivitiesComment"];
+				$time = $this->Time->timeAgoInWords($comment["created"]);
+				$this->viewVars["Comment"][] = $comment['id'];
+	 ?>
+              <div class="reply cleared marginbottom10">
+                  <?php echo $this->Html->image($smallPhoto, array('class' => 'border', "width"=>32, "height"=>32)); ?>
+                  <div class="right content">
+                    <span class="paragraph">
+                    	<?php echo($this->Html->link($name, "/profile/" . $username, array("class"=>"strong"))); ?>
+						<span class="commentMessage"><?php echo $comment["comment"] ?></span>
+                    </span>
+                   
+                   <ul class="clear">
+                        <li class="left"><a class="nohover dateCreated"><?php echo $time ?></a></li>
+                        <li class="right">
+                        <?php if($authUserId == $comment['user_id']):?>
+                       			 <a href="#delete" class="onDeleteComment showPopup" param_id="<?php echo $comment['id']?>">delete</a>
+                        <?php endif; ?>
+                        </li>
+                        <li class="right">
+                       <!-- <a href="javascript:void(1)" class="iLikeComment">like</a>
+                        <span class="clk-<?php echo $comment['id']?>"></span>-->
+                        
+                        </li>
+                    </ul>
+                 </div>   
+              </div> 
+              
+      <? 	endforeach; 
+	  	endif;
+	  ?>
+   
+	  <?php echo $this->Form->create('UsersActivitiesComment', 
+	  					array("class"=>"commentForm", "action"=>"addComment", "id"=>mt_rand(12,123456789)));?>
+                <textarea class="textarea inputComment autoGrow" name="data[comment]"></textarea>
+                <div class="textarea-bottom"></div>
+                <input type="hidden"  name="data[activity_id]" value="<?php echo $postId?>"  class="activityId" />
+          		<div class="margintop8">
+              		<button type="button" class="button exact setLoader commentButton">Post Comment</button>
+                    <a href="javascript:void(1)" class="right small padright20 hideComment">hide</a>
+          		</div>
+          		<span class="ajaxTarget hide"></span>
+     <?php echo $this->Form->end(); ?>
+    </div>
+    <!----------------------------------------------------------
+    	box comment end
+    ----------------------------------------------------------->
+    

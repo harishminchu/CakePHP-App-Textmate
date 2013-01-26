@@ -1,0 +1,71 @@
+<?php
+	$config = Configure::read("Video");
+	$noInputOptions = array("label"=>false,"div"=>false);
+	
+	$smallPhoto = $this->data["UsersVideo"]["photo"];	
+	if(!empty($smallPhoto)):
+			$smallPhoto = "?w=132&h=177&s=" . $config["photo"]["path"] . $smallPhoto;
+	else:
+		$smallPhoto = $this->data["UsersVideo"]["thumb_url"];	
+	endif;
+	$videoId = $this->params["pass"][0];
+?>
+
+<h3 class="marginbottom10"><?php echo $this->data["UsersVideo"]["title"];?></h3>
+<div class="upload">  
+	<?php echo $this->Html->image("$smallPhoto", array("height"=>132, "width"=>177, "class"=>"targetPhoto")); ?> 
+  	<div class="margintop10 addPhoto">
+		  <?php echo $this->Form->create('UsersVideo', array("class"=>"uploadForm", "action"=>"addPhoto"));?>      
+                  <div class="notification mistake" 
+                            mistake ="" 
+                            success="">
+                  </div>
+                        
+                  <input type="hidden" name="data[actionType]" class="actionType" value="upload"/>
+                  <input type="hidden" name="data[param_id]" class="paramId" value="0"/>
+                  <input type="hidden" name="data[uploadDestination]" class="uploadDestination" value="activities"/>
+                  <input type="hidden" name="data[sourceImage]" class="sourceImage"/> 
+                       
+                  <div class="marginbottom5 file-bg-small fileUploadContainer">
+                        <input name="data[photo]" type="file" class="file-upload fileUpload"  />
+                  </div>
+                
+                  <span class="ajaxTarget hide"></span>
+                  <span class="loader hide"><i class="setLoader"></i> Uploading...</span>                             
+          <?php echo $this->Form->end(); ?>           
+  	</div> 
+</div>
+
+
+<?php echo $this->Form->create('UsersVideo',
+							    array("class"=>"editVideoForm","action"=>"saveVideoDetail", "id"=>mt_rand(12,123456789)));?>
+    <ul class="blocked cleared">
+        <li> <span>Category</span>
+              <?php
+                    echo $this->Form->input('UsersVideo.category_id', array('options' => $dataMyCategories, 
+                                            "class"=>"categoryId", "label"=>false,"div"=>false));
+              ?>
+        </li>
+        <li> <span>Title</span>
+               <?php echo $this->Form->input("UsersVideo.title", 
+                                              array_merge(array("class"=>"title"), $noInputOptions));?>
+                     
+        </li>
+        <li> <span>Description</span>             
+                           <?php echo $this->Form->input("UsersVideo.description",
+                                 array('rows'=> '2',"label"=>false,"div"=>false, "class"=>"description"));?>
+        </li>                 
+    </ul>
+    <div class="clear upload">
+    	<div class="submits">
+           <button type="submit" class="setLoader">Save</button>
+           or 
+		   <a href="javascript:void(1)" class="back">Back to Manage Videos</a>
+        </div>
+        <div class="notification" 
+                            mistake ="Video title field is required." 
+                            success="Video details has been saved."></div>
+                            
+        <span class="ajaxTarget hide"></span> 
+    </div>
+<?php echo $this->Form->end(); ?> 

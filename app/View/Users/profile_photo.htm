@@ -1,0 +1,63 @@
+<?php
+	$config = Configure::read("User");
+	$user = $dataUserDetail["User"];
+	$noPhotoClass = null;
+	if(!empty($user)):
+		if(strstr($user["photo"], $config["photo"]["bignone"])):
+			$noPhotoClass = "hide";
+		endif;
+		$bigPhoto = $config["photo"]["path"] . "/" . $user["photo"];
+	else:
+		$noPhotoClass = "hide";
+		$bigPhoto = $config["photo"]["bignone"];
+	endif;
+?>
+   
+<?php echo $this->Form->create('Users', 
+					array("class"=>"uploadForm", "action"=>"addPhoto"));?>
+		<input type="hidden" id="x" name="x" />
+		<input type="hidden" id="y" name="y" />
+		<input type="hidden" id="w" name="w" />
+		<input type="hidden" id="h" name="h" />
+		<input type="hidden" name="data[actionType]" class="actionType" value="upload"/>
+		<input type="hidden" name="data[sourceImage]" class="sourceImage" 
+		value="<?php echo str_replace("_cropped","", $user["photo"])?>"/>
+						   
+	<div  class="box upload uploadPhoto">
+		<div class="notification mistake" 
+			mistake ="" 
+			success="">
+		</div>
+		  
+		<strong>Current Photo</strong>
+		<div class="photo"> 
+			<?php echo $this->Html->image($bigPhoto, 
+				  array('class' => 'bordered-gray target-photo targetPhoto', "width"=>200,"height"=>200)); ?>
+			<div class="preview">
+				<?php echo $this->Html->image($bigPhoto, array('class' => 'bordered-gray cropPreview')); ?>
+			</div> 
+		</div>
+		<div class="clear"> 
+			 <span class="editPhoto <?php echo $noPhotoClass?>">
+				<a href="javascript:void(1)" class="onEdit">Edit Thumbnail</a> or
+				<a href="#delete" class="showPopup removePhoto">Remove Photo</a> 
+			 </span>
+			 <span class="optionsChanges hide">
+				 <a href="javascript:void(1)" class="applyChanges">Apply Changes</a> or 
+				 <a href="javascript:void(1)" class="cancelCrop">Cancel</a>
+			 </span>
+		</div>
+	</div>
+	<div  class="box upload uploadPhoto">    
+		<div class="uploader"> <strong>Browse Photo</strong>
+			<div class="file-bg">
+			<input name="data[photo]" type="file" class="file-upload fileUpload"  />
+			</div>
+			<span class="loader hide"><i class="setLoader"></i> Uploading...</span>
+		</div> 
+	</div>
+	<span class="ajaxTarget hide"></span>
+<?php echo $this->Form->end(); ?>
+
+
+

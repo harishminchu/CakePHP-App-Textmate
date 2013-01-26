@@ -1,0 +1,112 @@
+<?php 
+	$configAlbum = Configure::read("Album"); 
+	$config = Configure::read("User");
+	
+	$userDetail = $this->Session->read('Auth.User');
+	$authUserId = $this->Session->read('Auth.User.id');
+	$authPhoto = $this->Session->read('Auth.User.photo');
+	$authUsername = $this->Session->read('Auth.User.username');
+	$authName = $this->Session->read('Auth.User.first_name') . " " .  $this->Session->read('Auth.User.last_name');
+	
+	if($authPhoto != $config["photo"]["bignone"] ):
+		$authPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $authPhoto;		
+	else:
+		$authPhoto = $config["photo"]["smallnone"];
+	endif;
+?>
+
+<ul class="gallery thumb photoGallery">
+<?php foreach($dataAlbumPhotos as $record) :
+		$usersPhoto = $record["UsersAlbumsPhoto"];
+		$photoPath = $configAlbum["photo"]["path"] . $usersPhoto["photo"];
+		$photoSmall = "?w=55&r=4:3&s=" . $photoPath;
+		$photoLarge = "/img/?w=800&r=4:3&s=" . $photoPath;
+		
+		$image = $this->Html->image($photoSmall, array("param_id"=>$usersPhoto["id"]));
+?> 
+       <li> 
+            <a class="thumb" href="<?php echo $photoLarge?>"> <?php echo $image ?> </a>
+            <span class="title"><?php echo $usersPhoto["title"]?></span>
+            <span class="caption"><?php echo $usersPhoto["caption"]?></span>
+            
+       </li>
+
+<?php   
+	endforeach;
+?>
+</ul> 
+<div class="scroll-cover scrollCover">
+	<div class="top-fix"></div>
+    <a href="javascript:void(1)" class="scrollTop">
+		<?php echo $this->Html->image("icons/control_start_dis.png");?>
+    </a> 
+    <a href="javascript:void(1)" class="scrollBottom">
+		<?php echo $this->Html->image("icons/control_end.png");?>
+    </a>
+</div>
+
+
+<div class="gallery preview photoPreview">
+  <div class="nav navCover">
+    <label class="left"> <a href="javascript:void(1)" class="prev"> 
+	<?php echo $this->Html->image("left-arrow.png"); ?> </a> </label>
+    <label class="right"> <a href="javascript:void(1)" class="next"> 
+	<?php echo $this->Html->image("right-arrow.png"); ?> </a> </label>
+  </div>
+  <?php echo $this->Html->image("gallery-default.png", array("class"=>"preview")); ?> 
+  <div class="contents"> <span class="title"></span>
+    <div class="caption"></div>
+  </div>
+</div>
+
+
+<div class="content-comments">
+    <div class="loadPhotoComments photo-comments"></div>
+       
+    <!----------------------------------------------------------
+        box comment start
+    ----------------------------------------------------------->
+    <div class="subject"><h3>Post your comment</h3></div>
+    <div class="box comment photoCommentBox clear">
+      <?php echo $this->Form->create('UsersAlbumsPhotos', 
+                        array("class"=>"photoCommentForm", "action"=>"addComment", "id"=>mt_rand(12,123456789)));?>
+                <textarea class="textarea inputComment autoGrow" name="data[comment]"></textarea>
+                <div class="textarea-bottom"></div>
+                <input type="hidden"  name="data[photo_id]" value=""  class="photoId" />
+                <div class="margintop8">
+                    <button type="submit" class="exact setLoader photoCommentButton">Post Comment</button>
+                    <img alt="loading..." src="/img/icons/loader.gif" class="loader">
+                </div>
+                <span class="ajaxTarget hide"></span>
+     <?php echo $this->Form->end(); ?>
+    </div>
+    <!----------------------------------------------------------
+        box comment end
+    -----------------------------------------------------------> 
+        
+        
+    <!----------------------------------------------------------
+        posted start ajax template
+     ----------------------------------------------------------->
+     <div class="posted hide commentPhotoBox clonedPhotoCommentElement">
+        <div class="message">
+          <div class="left"> 
+               <?php echo $this->Html->image($authPhoto, array('class' => 'border smallPhoto', "width"=>48, "height"=>48)); ?>
+          </div>
+          <div class="right marginbottom5">
+          <?php echo($this->Html->link($authName, "/profile/" . $authUsername, array("class"=>"username strong"))); ?>
+          
+          <span class="paragraph commentMessage"></span>
+            
+            <div class="clear">
+              	   <label class="ago small left"><a class="dateCreated"></a></label> 
+                   <a href="#deletePhotoComment" class="right onDeleteComment showPopup" param_id="">Delete</a>
+            </div>  
+            
+          </div>
+      </div>
+    </div>  
+    <!----------------------------------------------------------
+        posted end ajax template
+    -----------------------------------------------------------> 
+</div>	

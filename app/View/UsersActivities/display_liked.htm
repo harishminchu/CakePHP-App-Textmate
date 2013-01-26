@@ -1,0 +1,72 @@
+<?php
+	$config = Configure::read("User");
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php echo $this->Html->charset(); ?>
+	<title>
+		<?php echo __('Textmate'); ?>
+	</title>
+	<?php
+		echo $this->Html->meta('icon');
+		echo $this->Html->css( array('style'));
+		
+		$scriptBlock  = array();
+		$javaScript = array('jquery.core');
+		$options['rewrite'] = false;
+		echo $this->Jquery->link($javaScript, $scriptBlock, $options);
+	?>	
+
+</head>
+
+<body>
+<div class="lookup-box">
+  <div class="head"> Liked</div>
+  <!----------------------------------------------------------
+        content start
+   ----------------------------------------------------------->
+  <div class="container">
+    <div class="angle"> </div>
+    <?php foreach($dataUsersLiked as $records) :
+			$friend =  $records["UsersFriend"];
+			$user = $records["User"];
+			$totalFriend = count($friend);
+			$name = $user["first_name"] . " " . $user["last_name"];
+			$username = $user["username"];
+			if(!empty($user)):
+				$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];
+			else:
+				$smallPhoto = $config["photo"]["smallnone"];
+			endif;
+			
+	?>
+     	 <!------ item start ---------------------------------->
+         <div class="item bordered">
+
+           
+            <div class="inlined">
+                <div class="photo">
+                    <?php echo $this->Html->image($smallPhoto, array('class' => 'border', "width"=>48, "height"=>48)); ?>
+                </div>
+                <div class="details">
+                    <?php echo($this->Html->link($name, "/profile/" . $username, array("class"=>"strong"))); ?>
+                    <span class="small">
+                        <?php echo $totalFriend?> friends
+                    </span>    
+                </div>
+            </div>
+         
+
+       </div>
+      <!------ item end ---------------------------------->      
+    <?php endforeach; ?>
+  </div>
+  <!----------------------------------------------------------
+        content end
+  ----------------------------------------------------------->
+  <div class="buttons">
+   	<a href="javascript:parent.$.fancybox.close()" class="cancel">Close</a> </div>
+</div>
+</body>
+</html>

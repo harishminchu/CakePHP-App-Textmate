@@ -1,0 +1,98 @@
+<?php
+	$this->loadHelper("Time");
+	$config = Configure::read("User");
+	
+	$userDetail = $this->Session->read('Auth.User');
+	$authUserId = $this->Session->read('Auth.User.id');
+	$authPhoto = $this->Session->read('Auth.User.photo');
+	$authUsername = $this->Session->read('Auth.User.username');
+	$authName = $this->Session->read('Auth.User.first_name') . " " .  $this->Session->read('Auth.User.last_name');
+	
+	if($authPhoto != $config["photo"]["bignone"] ):
+		$authPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $authPhoto;		
+	else:
+		$authPhoto = $config["photo"]["smallnone"];
+	endif;
+	
+	$entry = $dataBlogEntry; 
+	$blog = $entry["Blog"];
+	$user = $entry["User"];
+	$name = $user["first_name"] . " " . $user["last_name"]; 	
+	$username = $user["username"];
+	$usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+				
+	if(!empty($user["photo"])):
+		$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+	else:
+		$smallPhoto = $config["photo"]["smallnone"];
+	endif;
+
+	$entry = $blog["entry"];
+	$time = $this->Time->timeAgoInWords($blog["created"]);
+	
+	$title = strtolower($blog["title"]);
+	$slugTitle = Inflector::slug($title, "-");
+	$readMore = $this->Html->link("read more",array("controller"=>"blogs", "action"=>"read-more/$slugTitle"));
+	$linkTitle = $this->Html->link($blog["title"],array("controller"=>"blogs", "action"=>"read-more/$slugTitle"));
+	   
+?>
+
+
+<div>
+    <?php echo $this->Html->image($smallPhoto, array('class' => 'left', "width"=>48, "height"=>48)); ?>
+    <h3><a href=""><?php echo $linkTitle?></a></h3>
+    <div><?php echo $entry?></div>
+</div>    
+
+
+
+<div class="content-comments">
+    <?php echo $this->element("Blogs/CommentList");?>
+    <div class="loadBlogComments blog-comments"></div>
+       
+    <!----------------------------------------------------------
+        box comment start
+    ----------------------------------------------------------->
+    <div class="subject"><h3>Post your comment</h3></div>
+    <div class="box comment blogCommentBox clear">
+      <?php echo $this->Form->create('Blogs', 
+                        array("class"=>"blogCommentForm", "action"=>"addComment", "id"=>mt_rand(12,123456789)));?>
+                <textarea class="textarea inputComment autoGrow" name="data[comment]"></textarea>
+                <div class="textarea-bottom"></div>
+                <div class="margintop8">
+                    <button type="submit" class="exact setLoader blogCommentButton">Post Comment</button>
+                    <img alt="loading..." src="/img/icons/loader.gif" class="loader">
+                </div>
+                <span class="ajaxTarget hide"></span>
+     <?php echo $this->Form->end(); ?>
+    </div>
+    <!----------------------------------------------------------
+        box comment end
+    -----------------------------------------------------------> 
+        
+        
+    <!----------------------------------------------------------
+        posted start ajax template
+     ----------------------------------------------------------->
+     <div class="posted hide commentBlogBox clonedBlogCommentElement">
+        <div class="message">
+          <div class="left"> 
+               <?php echo $this->Html->image($authPhoto, array('class' => 'smallPhoto', "width"=>48, "height"=>48)); ?>
+          </div>
+          <div class="right marginbottom5">
+          <?php echo($this->Html->link($authName, "/profile/" . $authUsername, array("class"=>"username strong"))); ?>
+          
+          <span class="paragraph commentMessage"></span>
+            
+            <div class="clear">
+              	   <label class="ago small left"><a class="dateCreated"></a></label> 
+                   <a href="#deleteBlogComment" class="right onDeleteComment showPopup" param_id="">Delete</a>
+            </div>  
+            
+          </div>
+      </div>
+    </div>  
+    <!----------------------------------------------------------
+        posted end ajax template
+    -----------------------------------------------------------> 
+</div>	

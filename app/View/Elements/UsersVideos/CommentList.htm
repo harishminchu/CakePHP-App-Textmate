@@ -1,0 +1,52 @@
+<?php 
+	$this->loadHelper("Time");
+	$authUserId = $this->Session->read('Auth.User.id');	
+	$config = Configure::read("User");
+	foreach($dataUserVideoComments as $post) :
+		$videoComment = $post["UsersVideosComment"];
+		$time = $this->Time->timeAgoInWords($videoComment["created"]);
+		
+		$postedMessage = $videoComment["comment"];
+		$user = $post["User"];
+		$name = $user["first_name"] . " " . $user["last_name"];
+			
+		$commentId = $videoComment["id"];
+		$username = $user["username"];
+	
+		if(!empty($user)):
+			$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+		else:
+			$smallPhoto = $config["photo"]["smallnone"];
+		endif;
+
+		$usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+		$profilePhoto = $this->Html->image("$smallPhoto", array('class' => 'border smallPhoto', "width"=>48, "height"=>48));		
+?>
+     	 <!----------------------------------------------------------
+            posted start
+         ----------------------------------------------------------->
+         <div class="comment-video commentVideoBox <?php echo $commentId ?>">
+            <div class="message">
+              <div class="left"> 
+                	<?php echo $profilePhoto ?>
+              </div>
+              <div class="right marginbottom5"> 
+              	  <?php echo($usernameLink); ?>
+              
+                  <span class="paragraph">
+                        <?php echo $postedMessage?>
+                  </span>
+              </div>
+              <div class="right">
+              	   <label class="ago small left"><?php echo $time?></label>
+                  <?php if($authUserId == $videoComment['user_id']):?>
+              				<a href="#deleteVideoComment" class="right onDeleteComment showPopup" 
+                            param_id="<?php echo $videoComment['id']?>">Delete</a>
+                  <?php endif;?>
+              </div>  
+          </div>
+       </div>
+       <!----------------------------------------------------------
+            posted end
+       ----------------------------------------------------------->
+<? endforeach; ?>

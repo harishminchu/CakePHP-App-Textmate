@@ -1,0 +1,49 @@
+<div class="videoContainer">
+	<ul class="lists equal">
+    	<?php 
+			$this->loadHelper("Time");
+			$config = Configure::read("Video");
+										 
+			foreach($dataVideos as $records):
+				
+				$user = $records["User"];
+				$video = $records["UsersVideo"];
+				$category = $records["UsersVideosCategory"];
+				
+				$name = $user["first_name"] . " " . $user["last_name"];
+				$username = $user["username"];
+				
+				$usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+				$thumb = $video["thumb_url"];
+				$id = $video["id"]; 
+				$title = $video["title"];
+				$length = strlen($title);
+				
+				if($length >= 50):
+					$title = substr($title, 0, 50) . "..."; 	
+				endif;
+				
+				$description = $video["description"];
+				$categoryName = $category["category_name"];
+				$time = $this->Time->timeAgoInWords($video["created"]);
+				
+				$smallPhoto = $video["photo"];	
+				if(!empty($smallPhoto)):
+					$smallPhoto = "?w=177&h=132&s=" . $config["photo"]["path"] . $smallPhoto;
+				else:
+					$smallPhoto = $video["thumb_url"];	
+				endif;
+				$photo = $this->Html->image("$smallPhoto", array("height"=>102, "width"=>136, "class"=>"")); 
+				$link = $this->Html->link($photo, array("controller"=>"videos", "action"=>"play/$id"),
+							  		  array("escape"=>false));
+		?>
+                <li>
+                    <?php echo $link ?>
+                    <span class="title"><?php echo $title ?></span>
+                     <span class="small category"><?php echo $categoryName?></span>
+                     <span class="small"><?php echo $time?></span>
+                    <span class="category">by <?php echo $usernameLink?></span>
+                </li>
+         <?php endforeach; ?>       
+    </ul>
+</div>

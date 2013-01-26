@@ -1,0 +1,40 @@
+<?php
+	$noInputOptions = array("label"=>false,"div"=>false);
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php echo $this->Html->charset(); ?>
+	<title>
+		<?php echo __('Textmate'); ?>
+	</title>
+	<?php
+		echo $this->Html->meta('icon');
+		echo $this->Html->css( array('style', 'jquery.fancybox', 'jquery.poshytip'));
+		
+		$scriptBlock  = array("App.ready()", "Ajax.ready()","Pages.Activate.ready()");
+		$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox', 'jquery.poshytip', 'app', 'ajax', "pages");
+		$options['rewrite'] = false;
+		
+		echo $this->Jquery->link($javaScript, $scriptBlock, $options);
+	?>	
+
+</head>
+<body>
+
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+	<div class="page cleared">
+		<a href="#registerWizard" class="showPopup triggerShowPopup"></a>	
+    </div>
+  
+<?php 
+	echo $this->element("Popup/RegisterWizardPopupBox");
+?> 
+
+<?php echo $this->element("Footer") ?>
+
+</body>
+</html>

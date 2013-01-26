@@ -1,0 +1,96 @@
+<?php
+	$this->loadHelper("Time");
+	$user = $dataUserDetail["User"];
+	if(!empty($user)):
+		$name = $user["first_name"] . " " . $user["last_name"];
+	else:
+		$name =  Configure::read('User.noname');
+	endif;
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php echo $this->Html->charset(); ?>
+	<title> <?php echo __('Textmate'); ?> </title>
+	<?php
+		echo $this->Html->meta('icon');
+		echo $this->Html->css( array('jquery.fancybox', 'style','activities', 'publics', "galleries"));
+		
+		$scriptBlock  = array("App.ready()", "Ajax.ready()", "Activities.ready()", "Users.PublicProfile.ready()");
+		$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox', 'jquery.autogrow', 
+						    'app', 'ajax', "galleries", "comments", "users", 'activities');
+		echo $this->Jquery->link($javaScript, $scriptBlock, $options = array());
+	?>	
+</head>
+<body>
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+<div class="page public">
+  <div class="container left">
+   	<?php echo $this->element("Users/ProfilePhoto");?> 
+    <?php echo $this->element("Menus/PublicProfileMenu");?> 
+  </div>
+  
+  <div class="container middle">
+    <h3><?php echo ucfirst($name)?></h3>
+    <ul class="tab cleared tabMenu">
+    	<li><a href="javascript:void(1)" class="updates">Updates</a>
+        	<div class="fixed"></div>
+        </li>
+        <li class="selected">
+        	<a href="javascript:void(1)" class="info">Personal Info</a>
+        	<div class="fixed default"></div>
+        </li>
+        <li>
+        	<a href="javascript:void(1)" class="status">Status</a>
+        	<div class="fixed"></div>	
+        </li>
+        <li>
+        	<a href="javascript:void(1)" class="friends"><span class="friendCount"></span> Friends</a>
+        	<div class="fixed"></div>    
+        </li>
+        <li>
+        	<a href="javascript:void(1)" class="albums"><span class="albumCount"></span> Albums</a>
+        	<div class="fixed"></div>    
+        </li>
+        <li class="hide">
+        	<a href="javascript:void(1)" class="photos">Singapore</a>
+        	<div class="fixed"></div>    
+        </li>
+    </ul>
+    <div class="divider"></div>
+    
+    <div class="updates tabConnected hide">
+		<input type="hidden" value="<?php echo $dataUserDetail["User"]["id"]?>" class="userId"  />
+		<?php echo $this->element("Activities/Post");?> 
+        <?php echo $this->element("Activities/PostedMessage");?> 
+    </div> 
+    <div class="info tabConnected">
+		<?php echo $this->element("Users/PublicInfo");?> 	
+    </div> 
+    
+    <div class="status tabConnected hide">
+		<?php echo $this->element("Publics/PublicDatings");?> 	
+    </div> 
+    
+    <div class="friends tabConnected hide">
+		<div class="loadFriends"></div>	
+    </div> 
+    
+    <div class="albums tabConnected hide">
+		<div class="loadAlbums"></div>	
+    </div>  
+    
+    <div class="photos tabConnected">
+        <div class="hide loadAlbumPhotos"></div>
+    </div>    
+    
+  </div>
+ 
+</div>
+<?php echo $this->element("Footer") ?>
+<?php echo $this->element("Popup/ActivitiesPopupBox");?>
+<?php echo $this->element("Popup/PublicPopupBox");?>  
+</body>
+</html>

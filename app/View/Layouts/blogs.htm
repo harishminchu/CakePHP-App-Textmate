@@ -1,0 +1,89 @@
+<?php
+	/* Layout */
+	$action = $this->action;
+	$additionalCss = array();
+	$subject = null;
+	$usesTinyMCE = array("writeNewEntry", "edit");
+	switch($action):
+		case "browse":
+			$subject = "Browse entries";		
+		case "myEntries":
+			$scriptBlock   = array();
+			$javaScript    = array('jquery.core');
+			$popupBox = null;
+			$options  = array();
+			if($subject == null):
+				$subject = "My Entries";				
+	        endif;			
+	        break;	
+		case "viewEntry":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()","Blogs.ViewEntry.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox',
+								'jquery.autogrow', 'app', 'ajax', "comments", "blogs");
+			$options  = array();
+			$popupBox = "BlogsPopupBox";
+			$additionalCss = array("jquery.fancybox");
+			
+			$options  = array();
+			if($subject == null):
+				$subject = "View Entry";				
+	        endif;			
+	        break;		
+		case "preview":
+			$scriptBlock   = array();
+			$javaScript    = array('jquery.core');
+			$popupBox = null;
+			$options  = array();
+			$subject  = "Preview New Entry";				
+	        break;	
+		case "edit": 
+			$subject = "Edit Entry";
+		case "writeNewEntry":
+			$scriptBlock  = array("App.ready()", "Ajax.ready()", "Blogs.WriteEntry.ready()");
+			$javaScript = array('jquery.core', 'jquery.form', 'jquery.poshytip', 'app', 'ajax', 'tinymce', "blogs");
+			$additionalCss = array("jquery.poshytip");
+			$popupBox = null;
+			$options['rewrite'] = false;
+			$options['validate'] = array("formclass"=>"createForm", "model"=>"Blog");
+			if($subject == null):
+				$subject = "Write New Entry";				
+	        endif;
+			break;			
+	endswitch;
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo $this->Html->charset(); ?>
+<title><?php echo __('Textmate'); ?> <?php echo $title_for_layout; ?></title>
+<?php if(in_array($action, $usesTinyMCE)):?>
+	<script type="text/javascript" src="/js/tiny_mce/tiny_mce.js"></script>
+<?php endif; ?>    
+    
+<?php
+	echo $this->Html->meta('icon');
+	echo $this->Html->css( array_merge(array('style', 'blogs'), $additionalCss));
+	echo $this->Jquery->link($javaScript, $scriptBlock, $options);
+?>
+</head>
+<body>
+
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+<div class="page blogs">
+	<div class="subject"><h3>BLOGS - <?php echo $subject?></h3></div>
+    <div class="left"> <?php echo $this->element("Menus/BlogsMenu");?>  </div>
+    <div class="middle">  
+		<?php echo $content_for_layout; ?>
+    </div>    
+</div>
+
+<?php echo $this->element("Footer") ?>
+<?php 
+	if($popupBox) :
+		echo $this->element("Popup/$popupBox");
+	endif;	
+?> 
+</body>
+</html>

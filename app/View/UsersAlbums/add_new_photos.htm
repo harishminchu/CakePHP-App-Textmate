@@ -1,0 +1,67 @@
+<?php
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$config = Configure::read("Album");
+	$photo = "?w=130&r=4:5&s=" . $config["photo"]["path"] . "_default_.jpg";
+	
+?>
+
+<div class="uploaded hide cleared photoDetailsCloned"> 
+	<?php echo $this->Form->create('UsersAlbumsPhoto', array("class"=>"saveDetailsForm", "action"=>"saveDetails", "id"=>mt_rand(1,12345678)));?>
+        <input type="hidden" name="data[UsersAlbumsPhoto][id]" class="photoId" value=""/>
+        <ul class="compact">
+            <li class="image"> <?php echo $this->Html->image($photo, array("class"=>"photoHolder border")); ?> </li>
+            <li>
+              <span>Move To Album</span>
+              <?php 
+                   $values = $dataAlbums;
+                   echo $this->Form->input('UsersAlbumsPhoto.album_id', 
+                   array_merge(array('options' => $values,"class"=>"albumIdHolder"),$noInputOptions));
+              ?>
+            </li>
+            <li>
+              <span>Title</span>
+              <input type="text" class="titleHolder" name="data[UsersAlbumsPhoto][title]">
+            </li>
+            <li>
+              <span>Caption</span>
+              <textarea type="text"  class="descHolder" name="data[UsersAlbumsPhoto][caption]"></textarea>
+            </li>
+            <li class="options"> 
+                <?php echo $this->Html->image("icons/save.png"); ?> 
+                <a href="javascript:void(1)" class="saveDetail setLoader">Update Details</a> 
+                <?php echo $this->Html->image("icons/deleted.png"); ?> 
+                <a href="javascript:void(1)" class="deleteDetail setLoader paramId" param_id="">Delete</a> 
+           		<div class="notification success wide">Photo details has been saved.</div>
+           </li>
+      </ul>
+      <span class="hide ajaxTarget"></span> 
+  <?php echo $this->Form->end(); ?>
+</div>
+
+
+
+<div class="clear uploaderContainer"> 
+  <?php echo $this->Form->create('UsersAlbums', array("class"=>"uploadForm", "action"=>"addPhoto"));?>
+  	<input type="hidden" name="data[actionType]" class="actionType" value="upload"/>
+  	<div class="notification" mistake ="" success=""></div>
+      <ul class="inlined medium">
+        <li>
+          <span>Select Album or <a href="#addAlbum" class="onAddAlbum  showPopup" param_id="0">Add New</a></span>
+          <?php $values = $dataAlbums;
+                echo $this->Form->input('UsersAlbum.album_id', array_merge(array('options' => $values, 
+				"class"=>"albumId"),$noInputOptions));
+           ?>
+        </li>
+        <li>
+              <span>Title</span>
+              <?php echo $this->Form->input("UsersAlbumsPhoto.title", array_merge(array("class"=>"albumId"),$noInputOptions));?> 
+        </li>
+        <li>
+          <span>Browse</span>
+          <div class="file-bg-button"><input name="data[photo]" type="file" class="file-upload fileUpload" /> </div>
+          <span class="loader hide"><i class="setLoader"></i> Uploading...</span> 
+        </li>
+      </ul>
+  	 <span class="hide ajaxTarget"></span> <?php echo $this->Form->end(); ?> 
+</div>
+

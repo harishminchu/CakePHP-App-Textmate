@@ -1,0 +1,61 @@
+<?php
+	$isMySessionViewing = false;
+	$isFriendViewing = false;
+	$friendIds = array();
+	$interestedGender = "any";
+	$interestedAge = "any";
+	$authUserId = $this->Session->read('Auth.User.id');
+	$user = $dataUserDetail["User"];
+	$dating = $dataUsersDating["UsersDating"];
+	$privacy = $dataUserDetail["UsersPrivacy"];
+	
+	$network = array(1=>"Globe",2=>"Smart", "Sun");
+    $myNetwork = $network[$user["network"]];
+	$myMobileNumber = $user["mobile_number"];		
+				
+	$gender = array(1=>"Male",2=>"Female", 3=>"Male and Female", 4=>"Gay", 5=>"Lesbian", 6=>"All");
+    if(isset($dating["gender"])):
+		$interestedGender =  $gender[$dating["gender"]];
+	endif;
+	
+	
+	$age = array(1=>"10 - 18",2=>"18 - 25", 3=>"25 - 30", 4=>"30 - 38", 5=>"38 - 45", 6=>"45 - 55", 7=>"55 - above", 8=>"Any");
+	if(isset($dating["age"])):
+		$interestedAge =  $age[$dating["age"]];
+	endif;
+	
+	
+	foreach($dataUserDetail["UsersFriend"] as $friend):
+		$friendIds[] = $friend["friend_id"];		
+	endforeach;
+	
+	if(in_array($authUserId, $friendIds)):
+	 	$isFriendViewing = true;
+	endif; 
+	 
+	if($authUserId == $user["id"]):
+		$isMySessionViewing = true;
+    endif;
+?>
+
+<div class="datings">
+  	<div class="subject"><h3>Looking for a textmate</h3></div>
+    <div class="message-status">
+		<?php echo $dating["message_status"]?>
+    </div>
+    
+    <div class="subject"><h3>Preferences</h3></div>
+   <?php if(($privacy["mobile"] == 1 || $isMySessionViewing) ||  ($privacy["mobile"] == 2 && $isFriendViewing)): ?>
+       <div class="mobile">
+            I am using <b><?php echo $myNetwork?></b> and my mobile number is <b><?php echo $myMobileNumber?></b>
+       </div>  	
+   <?php endif; ?>
+   <?php if(($privacy["datings"] == 1 || $isMySessionViewing) ||  ($privacy["datings"] == 2 && $isFriendViewing)): ?>
+       <div class="interest">
+           I'm very interested to <b><?php echo $interestedGender?></b> textmates  and age between <b><?php echo $interestedAge?></b> year old. 
+       </div>	
+   <?php endif; ?>	
+      
+</div>
+
+             

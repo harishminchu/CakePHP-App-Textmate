@@ -1,0 +1,49 @@
+<?php
+	$user = $dataUserDetail["User"];
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$privacies = array("0"=>"", "1"=>"Public", "2"=>"Friends", "3"=>"Only Me");
+?>
+<?php echo $this->Form->create('Users', 
+                            array("class"=>"editUserForm", "action"=>"saveUserDetail", "id"=>mt_rand(12,123456789)));?>
+
+    <ul class="blocked wider">
+      <li> <span>Location Privacy</span>
+            <?php
+               echo $this->Form->input('UsersPrivacy.location', array('options' =>$privacies, "selected"=>$dataPrivacy["location"],
+                            "label"=>false,"div"=>false,"class"=>"privacy"));
+            ?>
+      </li>
+      <li> <span>Province Of</span>
+            <?php
+                echo $this->Form->input('User.province_id', array('options' => $dataProvinces, 
+									    "selected"=>$varProvinceId, 'empty' => '', 
+                                        "label"=>false,"div"=>false,"class"=>"provinceId"));
+            ?>
+      </li>
+      <li> <span>City/Municipality</span>
+            <?php
+                echo $this->Form->input('User.location_id', array('options' =>$dataLocations, 'empty' => '', 
+                                "label"=>false,"div"=>false,"class"=>"locationId"));
+            ?>
+      </li>
+    </ul>
+
+    <ul class="blocked wider">
+      <li> <span>Address Privacy</span>
+            <?php
+                echo $this->Form->input('UsersPrivacy.address', array('options' =>$privacies,"selected"=>$dataPrivacy["address"], 
+                                "label"=>false,"div"=>false,"class"=>"privacy"));
+             ?>
+      </li>
+      <li> <span>Home Address</span> <?php echo $this->Form->input("User.address", array_merge($noInputOptions));?> </li>
+      <li class="submit">
+        <div class="notification" 
+                    mistake ="Some location  fields are necessary." 
+                    success="Your location information has been saved."> </div>
+        
+            <button type="submit" class="setLoader">Save</button>
+            or <?php echo $this->Html->link("Cancel",array("controller"=>"whats-new", "action"=>"")); ?> 
+      </li>
+    </ul>
+<span class="ajaxTarget hide"></span> 
+<?php echo $this->Form->end(); ?> 

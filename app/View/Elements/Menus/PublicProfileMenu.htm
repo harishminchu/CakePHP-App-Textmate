@@ -1,0 +1,15 @@
+<?php $authUsername = $this->Session->read('Auth.User.username'); ?>
+<!----------------------------------------------------------
+   	box left-menu
+----------------------------------------------------------->
+<div class="box left-menu"> 
+   <ul class="bordered">
+        <li><?php echo $this->Html->image("icons/view-recent-updates.png"); ?> 
+            <?php echo $this->Html->link("Add To My Friends",array("controller"=>"members", "action"=>"recent-updates")); ?>
+        </li>
+        <li class="noborder"><?php echo $this->Html->image("icons/view-profile.png"); ?> 
+            <?php echo $this->Html->link("Block Member",array("controller"=>"profile", "action"=>$authUsername)); ?>
+        </li>
+       
+   </ul>
+</div>

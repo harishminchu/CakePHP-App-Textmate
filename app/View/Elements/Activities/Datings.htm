@@ -1,0 +1,87 @@
+<?php
+	$datings = $dataUsersDating["UsersDating"];
+	$user = $dataUserDetail["User"];
+	$privacy = $dataUserDetail["UsersPrivacy"];
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$privacies = array("0"=>"", "1"=>"Public", "2"=>"Friends", "3"=>"Only Me");
+	$mobileNumber = $user["mobile_number"];
+	$grayClass = "";
+	if(!$datings["message_status"]):
+		$datings["message_status"] = "I am looking for a textmate...";
+		$grayClass = "gray";
+	endif;
+	
+	if(!isset($datings["id"])) {
+		$datings["id"] = 0;
+	}
+?>
+ <div class="box datings boxOnDatings">
+    <?php echo $this->Form->create('UsersDatings', array("class"=>"datingForm", "action"=>"savePreferences"));?>
+        <textarea class="textarea <?php $grayClass?> inputDatings autoGrow" 
+        name="data[UsersDating][message_status]"><?php echo $datings["message_status"]?></textarea>
+        <div class="textarea-bottom"></div>
+        <input type="hidden" value="<?php echo $datings["id"]?>" name="data[UsersDating][id]" />
+        
+        <ul class="blocked widest">
+              <li> 
+                 <span>My mobile info is viewable</span>
+				<?php
+                    echo $this->Form->input('UsersPrivacy.mobile', array('options' =>$privacies, "selected"=>$privacy["mobile"], 
+                                   "label"=>false,"div"=>false,"class"=>"privacy"));
+                ?>
+              </li>
+              <li>
+              	  <span>My mobile network</span>
+                <?php
+                   $network = array(1=>"Globe",2=>"Smart", 3=>"Sun");
+                   echo $this->Form->input('User.network', array('options' => $network, 'empty' => '', "selected"=>$user["network"], 
+                                  "label"=>false,"div"=>false));
+                ?>
+              </li>
+              <li>
+              	<span>My mobile number</span>
+                <?php echo $this->Form->input("User.mobile_number", array("value"=>$mobileNumber, 
+                                  "label"=>false,"div"=>false));?>
+              </li>
+        </ul>
+             
+         <ul class="blocked widest">
+              <li> 
+             	 <span>Preferences is viewable</span>
+                <?php
+                    echo $this->Form->input('UsersPrivacy.datings', array('options' =>$privacies, "selected"=>$privacy["datings"], 
+                                   "label"=>false,"div"=>false,"class"=>"privacy"));
+                ?>
+              </li>
+              <li>
+              	  <span>I'm looking for a </span>
+                  <?php
+                     $gender = array(1=>"Male",2=>"Female", 3=>"Male and Female", 4=>"Gay", 5=>"Lesbian", 6=>"All");
+                     echo $this->Form->input('UsersDating.gender', array('options' => $gender, 
+					 						 "label"=>false,"div"=>false,"empty"=>''));                  
+				  ?>
+              </li>
+              <li>
+              	  <span>Between the ages of</span>
+				   <?php
+                       $age = array(1=>"10 - 18",2=>"18 - 25", 3=>"25 - 30", 
+					   				4=>"30 - 38", 5=>"38 - 45", 6=>"45 - 55", 7=>"55 - above", 8=>"Any");
+                       echo $this->Form->input('UsersDating.age', array('options' => $age, "label"=>false,"div"=>false, 
+					  						   "empty"=>''));
+                    ?> 
+              </li>
+               <li class="submit">
+                    <div class="submits">
+                    	<button type="submit" class="button setLoader">Save</button>
+                    </div> 
+                     <div class="notification" 
+  						mistake ="Please input your message." 
+  						success="Preferences has been saved.">
+  					</div>	
+              </li>
+        </ul>
+  <span class="ajaxTarget hide"></span>
+  <?php echo $this->Form->end(); ?>       
+</div>
+
+             

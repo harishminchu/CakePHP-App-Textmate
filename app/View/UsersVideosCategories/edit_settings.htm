@@ -1,0 +1,65 @@
+<?php
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$config = Configure::read("Video");
+	$privacies = array("0"=>"", "1"=>"Public", "2"=>"Friends", "3"=>"Only Me");
+	
+	$usersVideo = $this->data["UsersVideo"];
+	foreach($usersVideo as $video):
+		$videoCover = $video["thumb_url"];
+		if($video["photo"] != ""):
+			$videoCover = $video["photo"];
+			$videoCover = "?w=177&h=132&r=4:3&s=" . $config["photo"]["path"] . $videoCover;	
+		endif;
+		if($video["category_cover"] == 1 ):
+			$videoCover = $video["thumb_url"];
+			if($video["photo"] != ""):
+				$videoCover = $video["photo"];
+				$videoCover = "?w=177&h=132&r=4:3&s=" . $config["photo"]["path"] . $videoCover;	
+			endif;
+			break;	
+		endif;
+	endforeach;
+	
+?>
+
+
+
+<?php echo $this->Form->create('UsersVideosCategory', array("class"=>"editVideoSettingsForm", "action"=>"saveSettings"));?> 
+	  <div class="cover cleared"> 
+             <ul class="blocked settings cleared">
+                <li class="image"> <?php echo $this->Html->image($videoCover, array("width"=>177,"height"=>132,
+								        "class"=>"videoHolder")); ?> </li>
+                <li class="full">
+                	<h3 class="marginbottom10"><?php echo $this->data["UsersVideosCategory"]["category_name"];?></h3>
+                </li>    
+                <li class="full">
+                  <span>Category Name</span>
+                  <?php echo $this->Form->input("UsersVideosCategory.category_name", array_merge($noInputOptions));?>
+                </li>
+                <li class="full">
+                  <span>Comment Privacy</span>
+                 <?php
+						echo $this->Form->input('UsersVideosCategory.comment_privacy', 
+						array_merge(array("class"=>"privacy","options"=>$privacies),$noInputOptions));
+				  ?>
+                </li>
+                <li>
+                  <span>Show Privacy</span>
+                 <?php
+						echo $this->Form->input('UsersVideosCategory.privacy', 
+						array_merge(array("class"=>"privacy", "options"=>$privacies),$noInputOptions));
+				 ?>
+                </li>
+           </ul>
+          <div class="submits">
+          	<button type="submit" class="button setLoader commentButton">Save Settings</button>
+             or 
+             <?php echo $this->Html->link("Back to My Videos",array("controller"=>"videos", "action"=>"my-videos")); ?>
+          </div>
+          <div class="notification success w200" 
+                mistake ="An error occured, please try again." 
+                success="Video settings has been saved.">
+          </div> 
+      </div>
+ 	  <span class="ajaxTarget hide"></span> 
+<?php echo $this->Form->end(); ?> 

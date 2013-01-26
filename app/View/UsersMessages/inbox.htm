@@ -1,0 +1,138 @@
+
+
+<?php 
+	$this->loadHelper("Time");
+	$user = $dataUserDetail["User"];
+	if(!empty($user)):
+		$name = $user["first_name"] . " " . $user["last_name"];
+	else:
+		$name =  Configure::read('User.noname');
+	endif;
+
+	$config = Configure::read("User");
+	$collector = array();
+	
+	
+	$authUserId = $this->Session->read('Auth.User.id');
+	$authPhoto = $this->Session->read('Auth.User.photo');
+	$authUsername = $this->Session->read('Auth.User.username');
+	$authName = $this->Session->read('Auth.User.first_name') . " " .  $this->Session->read('Auth.User.last_name');
+	
+	
+	if($authPhoto != $config["photo"]["bignone"] ):
+		$authPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $authPhoto;		
+	else:
+		$authPhoto = $config["photo"]["smallnone"];
+	endif;
+	
+	
+foreach($dataUserSent as $post) :
+	$unRead = "";
+	$classFirst = "";
+	$acitivityTypeImage = "reply";
+	$imageNotification = $this->Html->image("notification.jpg");
+	$postedPhoto = null;
+	
+	$message = $post["UsersMessage"];
+	$profile = $post["Profile"];
+	$type = $message["type"];
+	
+	$useId = $message["user_id"];
+	if($message["user_id"] == $authUserId):
+		$useId = $message["friend_id"];
+	endif;
+	
+	/*unread message count*/
+	if($message["read"] == 0 && $authUserId != $message["user_id"]) {
+		$unRead = "unread"; 
+	}
+	
+	if(!in_array($useId, $collector)):
+		$collector[] = $useId;
+		
+		$time = $this->Time->timeAgoInWords($message["created"]);
+		$postedMessage = $message["message"];
+		$length = strlen($postedMessage);
+		
+		if($length >=130):
+				$postedMessage = substr($message["message"],0 , 130) . "...";
+		endif;
+			
+		$user = $post["User"];
+		$name = $user["first_name"] . " " . $user["last_name"];
+			
+		$messageId = $message["id"];
+		$username = $user["username"];
+	
+		$path = $config["photo"]["path"];
+		if(!empty($user)):
+			$smallPhoto = "?w=48&h=48&s=" . $config["photo"]["path"] . $user["photo"];		
+		else:
+			$smallPhoto = $config["photo"]["smallnone"];
+		endif;
+	
+		$usernameLink = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+		$profilePhoto = $this->Html->image("$smallPhoto", array('class' => 'profile-photo smallPhoto', "width"=>48, "height"=>48));
+		
+		if($message["user_id"] == $authUserId):
+			$fromUserName = $this->Html->link($name, "/profile/" . $username, array("class"=>"strong"));
+			$toName = $profile["first_name"] . " " . $profile["last_name"];
+			$toUsername = $profile["username"];
+			$toProfileName = $this->Html->link($toName, "/profile/" . $toUsername, array("class"=>"strong")); 
+			$usernameLink = $fromUserName . " to " .$toProfileName; 
+		endif;		
+				
+		if ($message["photo"] != ""):
+			$activityPhotoPath = Configure::read("Message.photo.path");	
+			$attached = $this->Html->image("icons/attachment.png", array("class"=>"vmiddle"));
+			$postedPhotoPath = "?w=90&r=4:3&s=" . $activityPhotoPath . $message["photo"];	
+			$postedPhoto = $this->Html->tag("div", $attached . " attachment", array("class"=>"attach margintop3"));
+		endif;
+		 $i = 1;
+		if($i == 1):
+				$classFirst = "first";
+		endif;
+?>
+     
+         <!----------------------------------------------------------
+            message start
+         ----------------------------------------------------------->
+       <!----------------------------------------------------------
+            message start
+         ----------------------------------------------------------->
+         <div class="posted postedBox <?php echo $unRead?>">
+            <div class="message">
+              <div class="left"> 
+                <?php echo $profilePhoto ?>
+              </div>
+              <div class="right marginbottom5"> 
+              <?php echo($usernameLink); ?>
+              
+              <span class="paragraph">
+			  	<?php echo $postedMessage?>
+              </span>
+              
+              <?php echo $postedPhoto ?>
+               
+                <ul class="inline margintop8">
+                  <li class="nopadding"></li>
+                  <li class="ago small"><?php echo $time?></li>
+                  <li> 
+                  	<?php echo $this->Html->link("Read Message", array("controller"=>"messages","action"=>"inbox/read/$useId")); ?>
+                  </li>
+                </ul>
+              </div>
+              
+          </div>
+       </div>
+       <!----------------------------------------------------------
+            message end
+        ----------------------------------------------------------->
+       <!----------------------------------------------------------
+            message end
+        ----------------------------------------------------------->
+	<? endif; ?>
+<? endforeach; ?>
+
+
+

@@ -1,0 +1,30 @@
+/* albums */
+.albums textarea { height:35px}
+.albums .middle { width:650px; margin-left:70px}
+.albums .uploaded { clear:both; border-bottom:1px solid #DDDDDD; padding:0 0 15px 0; margin:0 0 25px 0}
+.albums .notification {margin:5px 0 5px 0}
+.albums .notification.wide { width:238px; }
+.albums .cover { margin:0 0 20px 0; border-bottom:1px solid #DDDDDD; padding:0 0 20px 0}
+.albums .cover li.options { font-size:11px;}
+.albums .options li{ padding:0 0 5px 0;}
+.albums .options input { width:auto}
+.albums .full { width:70%}
+.albums span.counter { font-weight:normal; }
+.albums .browse li { margin:0 15px 15px 0}
+.albums .browse li h3 { font-size:14px; padding:0} 
+
+.albums .message div.right { width:340px}
+.albums .message div.left { padding:8px 0 0 0}
+.albums .message { border-bottom:1px solid #EAEAEA; padding:5px 0 5px 0}
+.albums .message .ago { color:#999999}
+
+.albums textarea { border:0;}
+.albums .box.comment  { margin:0;}
+.albums .content-comments  {width:400px; clear:both; margin:0px 0 0 120px; padding:0; font-size:11px;}
+.albums .middle .subject h3 { font-size:11px;}
+.albums .middle .subject { margin-bottom:0;}
+
+/* box comment */
+.box.comment { width:386px; margin:0; background-color:#FCFCFC}
+.box.comment .textarea{ width:376px; height:16px; padding:5px;background:url(../img/comment-textarea.png) no-repeat;resize: none;}
+.box.comment .textarea-bottom {background:url(../img/comment-textarea-bottom.png) no-repeat; height:2px;width:386px;}

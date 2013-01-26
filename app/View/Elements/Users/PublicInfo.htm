@@ -1,0 +1,95 @@
+<?php
+	$isMySessionViewing = false;
+	$isFriendViewing = false;
+	$friendIds = array();
+	$authUserId = $this->Session->read('Auth.User.id');
+	$user = $dataUserDetail["User"];
+	$privacy = $dataUserDetail["UsersPrivacy"];
+	
+	foreach($dataUserDetail["UsersFriend"] as $friend):
+		$friendIds[] = $friend["friend_id"];		
+	endforeach;
+	
+	if(in_array($authUserId, $friendIds)):
+	 	$isFriendViewing = true;
+	endif; 
+	 
+	if($authUserId == $user["id"]):
+		$isMySessionViewing = true;
+    endif;
+?>
+<div class="subject"><h3>Personal Information</h3></div>
+ <div class="cleared">
+    <ul class="inline">
+      <li class="label">First Name</li>
+      <li class="text"><?php echo $user["first_name"]?></li>
+      <li class="label">Last Name</li>
+      <li class="text"><?php echo $user["last_name"]?></li>
+     <?php if(($privacy["gender"] == 1 || $isMySessionViewing) ||  ($privacy["gender"] == 2 && $isFriendViewing)): ?>
+          <li class="label">Gender</li>
+          <li class="text">
+            <?php
+                $gender = array(1=>"Male",2=>"Female");
+                echo $gender[$user["gender"]];
+            ?>
+          </li>
+      <?php endif; ?>
+          
+      <?php if(($privacy["birthdate"] == 1 || $isMySessionViewing) ||  ($privacy["birthdate"] == 2 && $isFriendViewing)): ?>
+                <li class="label">Birthday</li>
+                <li class="text birthday"> 
+                    <?php echo $this->Time->format( $format = 'M. d, Y', $user["birthdate"]);?>
+                </li>
+      <?php endif; ?>
+      
+      <li class="label">About Me</li>
+      <li class="text">
+    	<?php
+			echo $user["about_me"];
+		?>
+      </li>
+    </ul>
+  </div>
+  
+ <div class="subject"><h3>Contact Information</h3></div>
+ <div class="cleared">
+    <ul class="inline">
+      <?php if(($privacy["mobile"] == 1 || $isMySessionViewing) ||  ($privacy["mobile"] == 2 && $isFriendViewing)): ?>
+          <li class="label">Mobile Network</li>
+          <li class="text">
+          <?php 
+                $network = array(1=>"Globe",2=>"Smart", "Sun");
+                echo $network[$user["network"]];
+           ?>
+          </li>
+          <li class="label">Cellphone Number</li>
+          <li class="text"><?php  echo $user["mobile_number"];?></li>
+       <?php endif; ?>
+       
+       <?php if(($privacy["social"] == 1 || $isMySessionViewing) ||  ($privacy["social"] == 2 && $isFriendViewing)): ?>
+          <li class="label">Facebook</li>
+          <li class="text"><?php  echo $user["facebook"];?></li>
+          
+          <li class="label">Twitter</li>
+          <li class="text"><?php  echo $user["twitter"];?></li>
+        <?php endif; ?> 
+    </ul>
+  </div>
+  
+  <div class="subject"><h3>Location Information</h3></div>
+ <div class="cleared">
+    <ul class="inline">
+      <?php if(($privacy["location"] == 1 || $isMySessionViewing) ||  ($privacy["location"] == 2 && $isFriendViewing)): ?>
+          <li class="label">Region</li>
+          <li class="text"><?php  echo $dataLocation["ProvincesLocation"]["location"]?></li>
+          <li class="label">City/Provice</li>
+          <li class="text"><?php echo $dataLocation["Province"]["province"]?></li>
+      <?php endif; ?> 
+          
+      <?php if(($privacy["address"] == 1 || $isMySessionViewing) ||  ($privacy["address"] == 2 && $isFriendViewing)): ?>
+     	 		<li class="label">Address</li>
+      	 		<li class="text"><?php  echo $user["address"];?></li>
+      <?php endif; ?> 
+   
+    </ul>
+  </div>

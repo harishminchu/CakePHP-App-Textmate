@@ -1,0 +1,71 @@
+<?php
+	$this->loadHelper("Time");
+	$user = $dataUserDetail["User"];
+	if(!empty($user)):
+		$name = $user["first_name"] . " " . $user["last_name"];
+	else:
+		$name =  Configure::read('User.noname');
+	endif;
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php echo $this->Html->charset(); ?>
+	<title> <?php echo __('Textmate'); ?> </title>
+	<?php
+		echo $this->Html->meta('icon');
+		echo $this->Html->css( array('style', 'activities', 'jquery.fancybox'));
+		
+		$scriptBlock  = array("App.ready()", "Ajax.ready()", "Activities.ready()");
+		$javaScript = array('jquery.core', 'jquery.form', 'jquery.fancybox', 'jquery.autogrow', 'app', 'ajax', 'activities');
+		echo $this->Jquery->link($javaScript, $scriptBlock, $options = array());
+	?>	
+</head>
+<body>
+<?php echo $this->element("Header") ?>
+<?php echo $this->element("Menus/MainMenu") ?>
+
+<div class="page activities">
+  <div class="left">
+    <h3>Hi <?php echo ucfirst($name)?></h3>
+   	<?php echo $this->element("Users/ProfilePhoto");?> 
+    <?php echo $this->element("Menus/WhatsNewMenu");?> 
+  </div>
+  
+  <div class="middle">
+    <h3>What's New</h3>
+    <ul class="tab cleared tabMenu">
+    	<li class="selected">
+         	<?php echo $this->Html->image("icons/updates.png"); ?>
+        	<a href="javascript:void(1)" class="updates">Updates</a>
+        	<div class="fixed default"></div>  
+        </li>
+        <li>
+         	<?php echo $this->Html->image("icons/textmate.png"); ?> 
+         	<a href="javascript:void(1)" class="flirts">Textmate Preferences</a>
+         	 <div class="fixed"></div>
+         </li>
+    </ul>
+    <div class="updates tabConnected">
+		<?php echo $this->element("Activities/Post");?> 
+        <div class="clear"> 
+        <?php echo $this->element("Activities/PostedMessage");?> 
+        </div>
+	</div>
+    <div class="flirts hide tabConnected">
+		<?php echo $this->element("Activities/Datings");?> 
+	</div>
+	
+  </div>
+  <div  class="right">
+    <h3>Newest Member</h3>
+    <?php echo $this->element("Users/NewestMember");?> 
+    <h3 class="margintop8">Popular Member</h3>
+    <?php echo $this->element("Users/PopularMember");?> 
+  </div>
+</div>
+<?php echo $this->element("Footer") ?>
+<?php echo $this->element("Popup/ActivitiesPopupBox");?> 
+<div class="script"></div>
+</body>
+</html>

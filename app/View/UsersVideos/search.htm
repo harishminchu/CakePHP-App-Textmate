@@ -1,0 +1,15 @@
+<?php
+	$key = "";
+	if(isset($this->params->query["q"])):
+		$key = $this->params->query["q"];
+	endif;
+?>
+<div class="videoContainer">
+	<div class="search">
+        <input type="text" class="searchText" value="<?php echo $key?>" />
+        <button class="searchVideo setLoader">Search Videos</button>
+    </div>
+    <ul class="lists"></ul>
+</div>
+
+

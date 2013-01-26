@@ -1,0 +1,115 @@
+
+
+.textarea { width: auto; padding:5px; border:0; resize:none; font-size:12px;}
+small, .small, .gray { color:#999999;}
+strong, ul li.label { color:#777777}
+.box {border:1px solid #DDDDDD;}
+.posted .comment .reply { border-bottom:1px solid #EAEAEA}
+.border { border:1px solid #DDDDDD}
+.button.exact {padding: 3px; font-size:11px;}
+
+/* inlines */
+ul.inline li { float:left}
+ul li.label { float:left; width:80px; text-align:right; font-weight:bold; }
+ul li.text { float:right; width:270px; }
+div.label { float:left;font-weight:bold; }
+div.text { float:right;  }
+div.block { display:block;}
+
+/* paddings */
+.pad5 { padding:5px;}
+.pad10 { padding:10px;}
+.pad20 { padding:20px;}
+.padbottom10 { padding-bottom:10px;}
+.padbottom5 { padding-bottom:5px;}
+.padtop5 { padding-top:5px;}
+.padtop10 { padding-top:10px;}
+.padleft5 { padding-left:5px;}
+.padright5 { padding-right:5px;}
+.padright20 { padding-right:20px;}
+.padnotop { padding-top:0;}
+.padnone { padding:0}
+
+.left { width:195px; margin-right:0 5px 0 0; padding:5px;}
+.middle { width:522px; margin-right:0 5px 0 0; padding:5px;}
+.right { width:195px; padding:5px;}
+
+.posted { font-size:10pt}
+.posted span.paragraph { line-height:15px; font-size:11px;}
+.posted .comment p, .posted .comment ul { padding:5px 0 5px 0; width:338px}
+.posted .comment .reply { padding-bottom:2px;}
+.posted .comment ul { color:#999999}
+.message { border-bottom:1px solid #EAEAEA; padding:0 0 10px 0; margin:0 0 10px 0;  color:#555555; }
+.message div.left { width:50px}
+.message div.right { width:456px; line-height:14px; margin-bottom:5px; padding-left:0;}
+.message ul.inline { display:block}
+.message ul li { padding:0 0 0 5px; line-height:12px}
+.message ul li.nopadding { padding:0}
+.message ul li a { font-size:0.8em; padding:0 5px 0 0}
+.message ul li span.wrap { font-style:normal; font-size:11px; color:#999999;}
+.message ul li.small { padding-left:1px;}
+.message ul li span b {  font-weight:normal; font-size:11px;}
+.message ul li.right { width:50px; text-align:right} 
+.message .comment div.content{ width:348px}
+.message .comment ul li.left { padding:0;}
+.message .total { font-size:10px; color:#999999}
+.message .liked { width:60px; float:right; text-align:right; margin-right:10px;}
+.message .liked a.nohover { font-size:0.7em}
+.message a:hover { text-decoration:underline}
+.message ul li a.nohover:hover{ text-decoration:none;}
+.message ul li.ago { padding-left:5px}
+.message .activity-photo, .message .activity-video { margin:5px 5px 10px 0 ; float:left}
+.message .activity-video { width:140px; height:105px;}
+/* box post    */
+.box.post .textarea{ width:500px; height:16px; background:url(../img/post-textarea.png) no-repeat; resize: none; padding:5px}
+.box.post .textarea.input-message { height:150px}
+.box.post .textarea-bottom {background:url(../img/post-textarea-bottom.png) no-repeat; height:2px;width:510px;}
+.box.post .button { margin-right:20px}
+.box.post .post-menu a { font-weight:bold; padding-right:10px; font-size:11px}
+
+/* box comment */
+.box.comment { width:auto; margin:10px 58px; background-color:#FCFCFC}
+.box.comment .textarea{ width:376px; height:16px; padding:5px;background:url(../img/comment-textarea.png) no-repeat;resize: none;}
+.box.comment .textarea-bottom {background:url(../img/comment-textarea-bottom.png) no-repeat; height:2px;width:386px;}
+
+/* box datings    */
+.box.datings .textarea{ width:500px; height:16px; background:url(../img/post-textarea.png) no-repeat; resize: none; padding:5px;}
+.box.datings .textarea-bottom {background:url(../img/post-textarea-bottom.png) no-repeat; height:2px;width:510px;}
+
+.datings .inline { display:block}
+.datings small { color:#333333}
+.datings ul { margin:30px 0 0 5px}
+.datings ul li.label { width:140px; padding:3px; clear:left; font-weight:normal; text-align:left; color:#666666}
+.datings ul li.text { padding:2px; margin:0 0 0 10px}
+
+/* tabs */
+ul.tab { margin-left:10px; font-weight:bold}
+ul.tab li{ float:left; padding:3px 12px 5px 12px;  margin:0 3px 0 0; background:#FDFDFC; border:1px solid #F3F3F3;border-bottom:0}
+ul.tab li img { vertical-align:middle}
+ul.tab li.selected, ul.tab li:hover  { border:1px solid #DDDDDD; border-bottom:0;background:#FBFBFB; padding:3px 12px 5px 12px; }
+ul.tab div.fixed { position:absolute; background:url(../img/box-bg.jpg); height:8px; min-width:20px; display:none}
+ 
+
+/* datings */
+.datings .message-status { padding:5px; margin:0 0 20px 0; width:600px}
+
+/* box profile photo */
+.box.profile-photo, .box.left-menu { width:172px; height:auto; margin-bottom:5px;}
+
+/* others */
+.right.small { text-align:right; padding-right:27px}
+.right.content { padding-top:0;}
+.add-photo, .add-video { width:180px; float:left}
+.add-photo img, .add-video img{ border:1px solid #DDDDDD; padding:2px;}
+
+/*videos*/
+.videos { padding:10px; font-size:11px; line-height:17px;} 
+.videos ul.lists li { float:left; padding:8px; width:90px; border:1px solid #DDDDDD; margin:6px; min-height:169px;}
+.videos ul.lists.block li { clear:both; display:block; float:none; border:0; width:auto;}
+.videos ul.lists.block li div.left { width:355px; border:1px solid #DDDDDD;padding:5px; }
+.videos ul.lists.block .right.options span { display:block; clear:both}
+.videos ul.lists span.add, .videos ul.lists span.category { clear:both; float:none; display:block}
+.videos ul.lists span.category { color:#999999}
+.videos ul.lists span.title { min-height:50px; display:block}
+.add-video { font-size:11px;}
+.search-video {width:500px; height:430px;}

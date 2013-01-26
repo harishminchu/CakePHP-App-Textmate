@@ -1,0 +1,58 @@
+<?php
+	$user = $dataUserDetail["User"];
+	$noInputOptions = array("label"=>false,"div"=>false);
+	$privacies = array("0"=>"", "1"=>"Public", "2"=>"Friends", "3"=>"Only Me");
+?>
+<?php echo $this->Form->create('Users', array("class"=>"editUserForm", "action"=>"saveUserDetail", "id"=>mt_rand(12,123456789)));?>
+<ul class="blocked wide">
+  <li> <span>Mobile Privacy</span>
+		<?php
+            echo $this->Form->input('UsersPrivacy.mobile', array('options' =>$privacies, "selected"=>$dataPrivacy["mobile"], 
+                        "label"=>false,"div"=>false,"class"=>"privacy"));
+        ?>
+  </li>
+  <li> <span>Network</span>
+		<?php
+            $network = array(1=>"Globe",2=>"Smart", 3=>"Sun");
+            echo $this->Form->input('User.network', array('options' => $network, 'empty' => '', 
+                        "label"=>false,"div"=>false));
+        ?>
+  </li>
+  <li> 
+  	<span>Mobile Number</span> 
+	<?php echo $this->Form->input("User.mobile_number", array_merge($noInputOptions));?> <br>
+    <small>example: 639151234567</small> 
+  </li>
+</ul>
+
+<ul class="blocked wide">
+  <li> <span>Social Privacy</span>
+		<?php
+            echo $this->Form->input('UsersPrivacy.social', array('options' =>$privacies, "selected"=>$dataPrivacy["social"],
+                        "label"=>false,"div"=>false,"class"=>"privacy"));
+        ?>
+  </li>
+  <li> 
+  	<span>Facebook</span> 
+	<?php echo $this->Form->input("User.facebook", array_merge($noInputOptions));?> 
+    <br /><small>example: http://www.facebook.com/profile</small> 
+  </li>
+  
+  <li> 
+  	<span>Twitter</span> 
+	<?php echo $this->Form->input("User.twitter", array_merge($noInputOptions));?> 
+    <br /><small>example: http://www.twitter.com/name</small> </li>
+  <li> 
+  	<span>Yahoo IM</span> 
+	<?php echo $this->Form->input("User.yahooim", array_merge($noInputOptions));?> 
+  </li>
+  <li class="submit">
+    <div class="notification" 
+                mistake ="Some contact information fields are necessary." 
+                success="Your contact information has been saved."> </div>
+    <button type="submit" class="setLoader">Save</button>
+    or <?php echo $this->Html->link("Cancel",array("controller"=>"whats-new", "action"=>"")); ?> 
+  </li>
+</ul>
+<span class="ajaxTarget hide"></span> 
+<?php echo $this->Form->end(); ?> 
